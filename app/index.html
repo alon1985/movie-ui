@@ -31,7 +31,6 @@
 
       </div>
     </div>
-
   </form>
 
   <table wt-responsive-table class="table table-bordered table-striped" >
@@ -55,6 +54,32 @@
           <span ng-show="sortType == 'year'" class="fa fa-caret-down"></span>
           Year Seen
         </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class = "form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><i class="inputTitle"></i></div>
+            <input type="text" class="form-control" placeholder="Add Movie Title" ng-model="addMovieTitle">
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class = "form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><i class="inputFormat"></i></div>
+            <input type="text" class="form-control" placeholder="Add Movie Format" ng-model="addMovieFormat">
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class = "form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><i class="inputYear"></i></div>
+            <input type="text" class="form-control" placeholder="Add Movie Year" ng-model="addMovieYear" ng-keypress="($event.which === 13)?addMovie():0">
+          </div>
+        </div>
       </td>
     </tr>
     </thead>
