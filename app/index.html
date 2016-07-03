@@ -4,15 +4,16 @@
   <title>Alon's Movies</title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="release/angular-responsive-tables.min.css">
-  <script type="text/javascript" src="release/angular-responsive-tables.min.js"></script>
+  <link rel="stylesheet" href="angular-responsive-tables.min.css">
+  <script type="text/javascript" src="angular-responsive-tables.min.js"></script>
   <style>
     body { padding-top:50px; }
   </style>
 
   <!-- JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
   <script src="app.js"></script>
   <script src="controller.js"></script>
@@ -55,6 +56,10 @@
           Year Seen
         </a>
       </td>
+      <td>
+          Enter Password to Add Movie
+        </a>
+      </td>
     </tr>
     <tr>
       <td>
@@ -76,8 +81,18 @@
       <td>
         <div class = "form-group">
           <div class="input-group">
-            <div class="input-group-addon"><i class="inputYear"></i></div>
-            <input type="text" class="form-control" placeholder="Add Movie Year" ng-model="addMovieYear" ng-keypress="($event.which === 13)?addMovie():0">
+            <select ng-model="addMovieYear" name="addMovieYear">
+              <option value="In Theaters">In Theaters</option>
+              <option value="Video">Video</option>
+              </select>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class = "form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><i class="inputFormat"></i></div>
+            <input type="password" class="form-control" ng-model="moviePassword" ng-keypress="($event.which === 13)?addMovie():0">
           </div>
         </div>
       </td>
@@ -90,9 +105,9 @@
       <td>{{ movie.year }}</td>
     </tr>
     </tbody>
-
   </table>
 
 </div>
+
 </body>
 </html>

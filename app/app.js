@@ -1,7 +1,8 @@
 // Declare app level module which depends on views, and components
 angular.module('movieApp', [
     'ngRoute',
-    'wt.responsive'
+    'wt.responsive',
+    'ui.bootstrap'
 ]).config('$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
         templateUrl: './index.html',
