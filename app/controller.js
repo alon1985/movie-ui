@@ -4,6 +4,13 @@ var movieApp = angular.module('movieApp', []);
         $scope.sortType     = 'title'; // set the default sort type
         $scope.sortReverse  = false;  // set the default sort order
 
+       $scope.Range = function(start, end) {
+           var result = [];
+           for (var i = start; i <= end; i++) {
+               result.push(i);
+           }
+           return result;
+       };
 
         $http.get('http://alon-film-id.appspot.com/movies/search')
             .then(function(res){
