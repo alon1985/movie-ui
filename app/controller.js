@@ -40,6 +40,7 @@ var movieApp = angular.module('movieApp', []);
                     $scope.addMovieFormat = '';
                     $scope.addMovieYear = '';
                     $scope.moviePassword = '';
+                    $window.location.reload();
                 }).error(function(data, status, headers, config) {
                     $window.alert("Failed to add movie");
                     // called asynchronously if an error occurs

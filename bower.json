@@ -1,9 +1,9 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
-  "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
-  "license": "MIT",
+  "name": "Alon's Movie UI",
+  "description": "Alon's Movies",
+  "version": "1.0",
+  "homepage": "https://github.com/alon85/movie-ui",
+  "license": "Alon Motro",
   "private": true,
   "dependencies": {
     "angular": "~1.5.0",
