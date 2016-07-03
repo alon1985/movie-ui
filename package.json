@@ -11,7 +11,7 @@
     "jasmine-core": "^2.4.1"
   },
   "scripts": {
-    "start": "http-server -a 127.0.0.1 -p 8080",
+    "start": "http-server -a 127.0.0.1 -p 8080"
   },
   "dependencies": {
     "bootstrap": "^3.3.6"
