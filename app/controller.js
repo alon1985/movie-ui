@@ -12,7 +12,7 @@ var movieApp = angular.module('movieApp', []);
            return result;
        };
 
-        $http.get('http://alon-film-id.appspot.com/movies/search')
+        $http.get('https://alon-film-id.appspot.com/movies/search')
             .then(function(res){
                 $scope.movies = res.data;
             });
