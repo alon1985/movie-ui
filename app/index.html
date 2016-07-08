@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Alon's Movies</title>
-    <link rel="icon" href="https://image3.putlocker.is/images/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="https://image3.putlocker.is/images/favicon.png" type="image/x-icon"/>
     <!-- CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -26,55 +26,65 @@
 <body>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="container" ng-app="movieApp" ng-controller="mainController">
+    <a href style="color:#337ab7;font-size: medium;" ng-click="showAddMovie = !showAddMovie">Add Movie</a><br/><br/>
+    <form ng-submit="submit()" ng-controller="mainController" ng-show="showAddMovie">
+        <table wt-responsive-table class="table table-bordered table-striped">
 
-    <table wt-responsive-table class="table table-bordered table-striped">
-
-        <thead>
-        <tr>
-            <td style="color:#337ab7;">Add Movie</td>
-            <td style="color:#337ab7;">Movie Format</td>
-            <td nowrap style="color:#337ab7;">Year Seen</td>
-            <td style="color:#337ab7;">Enter Password</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon"><i class="inputTitle"></i></div>
-                        <input type="text" class="form-control" placeholder="Add Movie Title" ng-model="addMovieTitle">
+            <thead>
+            <tr>
+                <td style="color:#337ab7;">Movie Title</td>
+                <td style="color:#337ab7;">Movie Format</td>
+                <td nowrap style="color:#337ab7;">Year Seen</td>
+                <td style="color:#337ab7;">Enter Password</td>
+                <td style="color:#337ab7;">Add Movie</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="inputTitle"></i></div>
+                            <input type="text" class="form-control"
+                                   ng-model="addMovieTitle">
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <div class="input-group">
-                        <select ng-model="addMovieFormat" name="addMovieFormat">
-                            <option value="In Theaters">In Theaters</option>
-                            <option value="Video">Video</option>
-                        </select>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <select ng-model="addMovieFormat" name="addMovieFormat">
+                                <option value="In Theaters">In Theaters</option>
+                                <option value="Video">Video</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <div class="input-group">
-                        <select ng-model="addMovieYear" ng-options="year for year in Range(2016, 2030)"></select>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <select ng-model="addMovieYear" ng-options="year for year in Range(2016, 2030)"></select>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon"><i class="inputFormat"></i></div>
-                        <input type="password" class="form-control" ng-model="moviePassword"
-                               ng-keypress="($event.which === 13)?addMovie():0">
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="inputFormat"></i></div>
+                            <input type="password" class="form-control" ng-model="moviePassword">
+                        </div>
                     </div>
-                </div>
-            </td>
-        </tr>
-        </thead>
-    </table>
-
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="inputFormat"></i></div>
+                            <input type="submit" class="form-control">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </thead>
+        </table>
+    </form>
 
     <form>
         <div class="form-group">

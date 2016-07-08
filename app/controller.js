@@ -23,28 +23,23 @@ var movieApp = angular.module('movieApp', []);
             angular.lowercase(row.year).indexOf(angular.lowercase($scope.query) || '') !== -1);
         };
 
-        $scope.addMovie = function(){
+        $scope.submit = function(){
             if (angular.isDefined($scope.addMovieTitle) && $scope.addMovieYear!= ''
                 && $scope.addMovieFormat!= '') {
                 var data = {
                     'title': $scope.addMovieTitle,
                     'year': $scope.addMovieYear,
-                    'format': $scope.addMovieFormat
-                };
+                    'format': $scope.addMovieFormat,
+                    'consumer': $scope.moviePassword
+            };
                 var parameter = JSON.stringify(data);
 
-                $http.post(url, parameter, {headers: {'Content-Type': 'application/json'}}).success(function(data, status, headers, config) {
-                    $scope.movies.push({ title: $scope.addMovieTitle, format: $scope.addMovieFormat, year: $scope.addMovieYear, consumer: $scope.moviePassword });
-                    // CLEAR THE FIELDS.
-                    $scope.addMovieTitle = '';
-                    $scope.addMovieFormat = '';
-                    $scope.addMovieYear = '';
-                    $scope.moviePassword = '';
+                $http.post('https://alon-film-id.appspot.com/movies/add', parameter, {headers: {'Content-Type': 'application/json'}}).success(function(data, status, headers, config) {
+                    $scope.movies.push({ title: $scope.addMovieTitle, format: $scope.addMovieFormat, year: $scope.addMovieYear});
+                    $window.alert("Movie added");
                     $window.location.reload();
                 }).error(function(data, status, headers, config) {
                     $window.alert("Failed to add movie");
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
                 });
 
             }
