@@ -1,4 +1,4 @@
-angular.module('movieApp', ['wt.responsive', 'ngAnimate', 'ui.bootstrap']);
+angular.module('movieApp', ['ngAnimate', 'ui.bootstrap']);
 angular.module('movieApp').controller('mainController', function($scope, $http, $window, $uibModal) {
     $scope.animationsEnabled = true;
     $scope.sortType = 'title'; // set the default sort type

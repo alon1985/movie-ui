@@ -15,12 +15,10 @@
     </style>
 
     <!-- JS -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
-
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="angular-responsive-tables.min.js"></script>
     <script src="controller.js"></script>
 
 </head>
@@ -29,15 +27,16 @@
 <div class="container" ng-app="movieApp" ng-controller="mainController">
     <a href style="color:#337ab7;font-size: medium;" ng-click="showAddMovie = !showAddMovie">Add Movie</a><br/><br/>
     <form ng-submit="submit()" ng-controller="mainController" ng-show="showAddMovie">
-        <table wt-responsive-table class="table table-bordered table-striped">
+        <div class="table-responsive">
+        <table class="table table-bordered table-striped table-condensed">
 
             <thead>
             <tr>
-                <td style="color:#337ab7;">Movie Title</td>
-                <td style="color:#337ab7;">Movie Format</td>
-                <td nowrap style="color:#337ab7;">Year Seen</td>
-                <td style="color:#337ab7;">Enter Password</td>
-                <td style="color:#337ab7;">Add Movie</td>
+                <th class="col-xs-4" style="color:#337ab7;">Movie Title</th>
+                <th class="col-xs-1" style="color:#337ab7;">Movie Format</th>
+                <th class="col-xs-1" style="color:#337ab7;">Year Seen</th>
+                <th class="col-xs-4" style="color:#337ab7;">Enter Password</th>
+                <th class="col-xs-2" style="color:#337ab7;">Add Movie</th>
             </tr>
             <tr>
                 <td>
@@ -85,6 +84,7 @@
             </tr>
             </thead>
         </table>
+            </div>
     </form>
     <script type="text/ng-template" id="confirmMovie.html">
         <div class="modal-header">
@@ -128,8 +128,8 @@
             </div>
         </div>
     </form>
-
-    <table wt-responsive-table class="table table-bordered table-striped">
+ <div class="table-responsive">
+    <table class="table table-bordered table-striped table-condensed">
 
         <thead>
         <tr>
@@ -164,7 +164,7 @@
         </tr>
         </tbody>
     </table>
-
+</div>
 </div>
 
 </body>
