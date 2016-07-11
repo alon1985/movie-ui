@@ -54,11 +54,12 @@ angular.module('movieApp').controller('addMovieController', function($scope, $ht
     $scope.items = items;
     $scope.ok = function() {
         var data = {
-            'title': $scope.items.addMovieTitle,
-            'year': $scope.items.addMovieYear,
-            'format': $scope.items.addMovieFormat,
-            'consumer': $scope.items.moviePassword
+            'title': $scope.items.movieTitle,
+            'year': $scope.items.movieYear,
+            'format': $scope.items.movieFormat,
+            'consumer': $scope.items.consumer
         };
+        alert($scope.items.consumer);
         var parameter = JSON.stringify(data);
 
         $http.post('https://alon-film-id.appspot.com/movies/add', parameter, {headers: {'Content-Type': 'application/json'}}).success(function(data, status, headers, config) {
