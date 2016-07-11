@@ -59,7 +59,6 @@ angular.module('movieApp').controller('addMovieController', function($scope, $ht
             'format': $scope.items.movieFormat,
             'consumer': $scope.items.consumer
         };
-        alert($scope.items.consumer);
         var parameter = JSON.stringify(data);
 
         $http.post('https://alon-film-id.appspot.com/movies/add', parameter, {headers: {'Content-Type': 'application/json'}}).success(function(data, status, headers, config) {
