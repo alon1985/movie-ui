@@ -17,7 +17,7 @@ angular.module('movieApp').controller('mainController', function($scope, $http, 
                             movieTitle: $scope.addMovieTitle,
                             movieYear: $scope.addMovieYear,
                             movieFormat: $scope.addMovieFormat,
-                            consumer: $scope.addMoviePassword
+                            consumer: $scope.moviePassword
                         };
                     }
                 }
