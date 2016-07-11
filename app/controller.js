@@ -49,7 +49,7 @@ angular.module('movieApp').controller('mainController', function($scope, $http, 
     };
 
 });
-angular.module('movieApp').controller('addMovieController', function($scope, $http, $uibModalInstance, $uibModal, items) {
+angular.module('movieApp').controller('addMovieController', function($scope, $http, $uibModalInstance, $uibModal, items, $window) {
 
     $scope.items = items;
     $scope.ok = function() {
@@ -91,4 +91,8 @@ angular.module('movieApp').controller('addMovieController', function($scope, $ht
     $scope.close = function() {
         $uibModalInstance.dismiss('cancel');
     };
+    $scope.closeAndReload = function() {
+        $uibModalInstance.dismiss('cancel');
+        $window.location.reload();
+    }
 });
