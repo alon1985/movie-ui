@@ -1,8 +1,6 @@
 angular.module('movieApp', ['ngAnimate', 'ui.bootstrap']);
-angular.module('movieApp').controller('mainController', function($scope, $http, $window, $uibModal) {
+angular.module('movieApp').controller('mainController', function($scope, $http, $window, $uibModal, movieService) {
     $scope.animationsEnabled = true;
-    $scope.sortType = 'title'; // set the default sort type
-    $scope.sortReverse = false;  // set the default sort order
 
     $scope.open = function(size) {
         if ($scope.addMovieTitle && $scope.addMovieFormat && $scope.addMovieYear) {
@@ -37,17 +35,23 @@ angular.module('movieApp').controller('mainController', function($scope, $http, 
         return result;
     };
 
-    $http.get('https://alon-film-id.appspot.com/movies/search')
-        .then(function(res) {
-            $scope.movies = res.data;
-        });
+    movieService.getMovies().then(function(movies) {
+        $scope.movies = movies;
+    });
 
-    $scope.search = function(row) {
-        return (angular.lowercase(row.title).indexOf(angular.lowercase($scope.query) || '') !== -1 ||
-        angular.lowercase(row.format).indexOf(angular.lowercase($scope.query) || '') !== -1 ||
-        angular.lowercase(row.year).indexOf(angular.lowercase($scope.query) || '') !== -1);
+
+
+});
+angular.module('movieApp').factory('movieService', function($http) {
+    var getMovies = function() {
+        return $http.get('https://alon-film-id.appspot.com/movies/search').then(function(response) {
+            return response.data;
+        });
     };
 
+    return {
+        getMovies: getMovies
+    };
 });
 angular.module('movieApp').controller('addMovieController', function($scope, $http, $uibModalInstance, $uibModal, items, $window) {
 

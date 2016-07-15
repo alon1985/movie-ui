@@ -102,7 +102,6 @@
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
     </script>
-
     <script type="text/ng-template" id="failedMovieModal.html">
         <div class="modal-body" style="background-color: #f2dede; color: #a94442">Failed to Add Movie
         <button type="button" class="close" ng-click="close()">
@@ -123,48 +122,28 @@
             <div class="input-group">
                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
 
-                <input type="text" class="form-control" placeholder="Search Movie Title" ng-model="searchMovies">
+                <input type="text" class="form-control" placeholder="Search Movie Title" ng-model="movieQuery">
 
             </div>
         </div>
     </form>
- <div class="table-responsive">
-    <table class="table table-bordered table-striped table-condensed">
+    <uib-accordion close-others="true">
+        <uib-accordion-group heading="{{movie.title}}" ng-repeat="movie in movies | filter: {title: movieQuery}">
+            <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                <tr>
+                    <th class="col-xs-1" style="color:#337ab7;">Year Seen</th>
+                    <th class="col-xs-1" style="color:#337ab7;">Movie Format</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="view in movie.viewed">
+                    <td>{{view.year}}</td>
+                    <td>{{view.format}}</td>
+                </tr>
+            </table>
+        </uib-accordion-group>
+    </uib-accordion>
 
-        <thead>
-        <tr>
-            <td>
-                <a href="#" ng-click="sortType = 'title'; sortReverse = !sortReverse">
-                    <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-up"></span>
-                    Movie Title
-                </a>
-            </td>
-            <td>
-                <a href="#" ng-click="sortType = 'format'; sortReverse = !sortReverse">
-                    <span ng-show="sortType == 'format' && !sortReverse" class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'format' && sortReverse" class="fa fa-caret-up"></span>
-                    Movie Format
-                </a>
-            </td>
-            <td>
-                <a href="#" ng-click="sortType = 'year'; sortReverse = !sortReverse">
-                    <span ng-show="sortType == 'year' && !sortReverse" class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'year' && sortReverse" class="fa fa-caret-up"></span>
-                    Year Seen
-                </a>
-            </td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="movie in movies | orderBy:sortType:sortReverse | filter: searchMovies ">
-            <td>{{ movie.title }}</td>
-            <td>{{ movie.format }}</td>
-            <td>{{ movie.year }}</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 </div>
 
 </body>
