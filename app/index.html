@@ -1,150 +1,133 @@
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Alon's Movies</title>
-    <link rel="icon" href="https://image3.putlocker.is/images/favicon.png" type="image/x-icon"/>
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="angular-responsive-tables.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Movies</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-material-design.css">
+    <link rel="stylesheet" type="text/css" href="css/ripples.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCGvgDMg6kX4YVwwpU6zTi21x9f2Wtdbtc",
+            authDomain: "alon-film-ui.firebaseapp.com",
+            databaseURL: "https://alon-film-ui.firebaseio.com",
+            storageBucket: "alon-film-ui.appspot.com",
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.css" />
     <style>
         body {
-            padding-top: 50px;
+            margin: 0;
         }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript">
+        // FirebaseUI config.
+        var uiConfig = {
+            // Url to redirect to after a successful sign-in.
+            'signInSuccessUrl': '/',
+            'callbacks': {
+                'signInSuccess': function(user, credential, redirectUrl) {
+                    if (window.opener) {
+                        // The widget has been opened in a popup, so close the window
+                        // and return false to not redirect the opener.
+                        window.close();
+                        return false;
+                    } else {
+                        // The widget has been used in redirect mode, so we redirect to the signInSuccessUrl.
+                        return true;
+                    }
+                }
+            },
+            'signInOptions': [
+                // TODO(developer): Remove the providers you don't need for your app.
+                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+                firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+                firebase.auth.GithubAuthProvider.PROVIDER_ID,
+                firebase.auth.EmailAuthProvider.PROVIDER_ID
+            ],
+            // Terms of service url.
+            'tosUrl': 'https://www.google.com'
+        };
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        // The start method will wait until the DOM is loaded to include the FirebaseUI sign-in widget
+        // within the element corresponding to the selector specified.
+        ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
 
-    <!-- JS -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
-    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="controller.js"></script>
 
+
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<div class="container" ng-app="movieApp" ng-controller="mainController">
-    <a href style="color:#337ab7;font-size: medium;" ng-click="showAddMovie = !showAddMovie">Add Movie</a><br/><br/>
-    <form ng-submit="submit()" ng-controller="mainController" ng-show="showAddMovie">
-        <div class="table-responsive">
-        <table class="table table-bordered table-striped table-condensed">
-
-            <thead>
-            <tr>
-                <th class="col-xs-4" style="color:#337ab7;">Movie Title</th>
-                <th class="col-xs-1" style="color:#337ab7;">Movie Format</th>
-                <th class="col-xs-1" style="color:#337ab7;">Year Seen</th>
-                <th class="col-xs-4" style="color:#337ab7;">Enter Password</th>
-                <th class="col-xs-2" style="color:#337ab7;">Add Movie</th>
-            </tr>
-            <tr>
-                <td>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="inputTitle"></i></div>
-                            <input type="text" class="form-control"
-                                   ng-model="addMovieTitle">
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <select ng-model="addMovieFormat" name="addMovieFormat">
-                                <option value="In Theaters">In Theaters</option>
-                                <option value="Video">Video</option>
-                            </select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <select ng-model="addMovieYear" ng-options="year for year in Range(2016, 2030)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="inputFormat"></i></div>
-                            <input type="password" class="form-control" ng-model="moviePassword">
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="inputFormat"></i></div>
-                            <button type="button" class="btn btn-default" ng-click="open()">Add Movie</button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </thead>
-        </table>
-            </div>
-    </form>
-    <script type="text/ng-template" id="confirmMovie.html">
-        <div class="modal-header">
-            <h3 class="modal-title">Confirm Movie Details</h3>
+<div class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="javascript:void(0)">Movies</a>
         </div>
-        <div class="modal-body">
-            <ul>
-                <li>{{items.movieTitle}}</li>
-                <li>{{items.movieYear}}</li>
-                <li>{{items.movieFormat}}</li>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="javascript:void(0)">My List</a></li>
+                <li><a href="javascript:void(0)">Add Movie</a></li>
+                <li><a href="javascript:void(0)">My Stats</a></li>
+                <li class="dropdown">
+                    <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Export
+                        <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)">Export to CSV</a></li>
+                        <li><a href="javascript:void(0)">Sync to Cloud</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><i class="material-icons">account_circle</i>
+                       </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)">Login</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
-    <script type="text/ng-template" id="failedMovieModal.html">
-        <div class="modal-body" style="background-color: #f2dede; color: #a94442">Failed to Add Movie
-        <button type="button" class="close" ng-click="close()">
-            <span aria-hidden="true">×</span>
-        </button>
-            </div>
-    </script>
-    <script type="text/ng-template" id="successMovieModal.html">
-        <div class="modal-body" style="background-color: #dff0d8; color: #3c763d" >Movie Added
-        </div>
-        <button type="button" class="close" ng-click="closeAndReload()">
-            <span aria-hidden="true">×</span>
-        </button>
-    </script>
-
-    <form>
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon"><i class="fa fa-search"></i></div>
-
-                <input type="text" class="form-control" placeholder="Search Movie Title" ng-model="movieQuery">
-
-            </div>
-        </div>
-    </form>
-    <uib-accordion close-others="true">
-        <uib-accordion-group heading="{{movie.title}}" ng-repeat="movie in movies | filter: {title: movieQuery}">
-            <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                <tr>
-                    <th class="col-xs-1" style="color:#337ab7;">Year Seen</th>
-                    <th class="col-xs-1" style="color:#337ab7;">Movie Format</th>
-                </tr>
-                </thead>
-                <tr ng-repeat="view in movie.viewed">
-                    <td>{{view.year}}</td>
-                    <td>{{view.format}}</td>
-                </tr>
-            </table>
-        </uib-accordion-group>
-    </uib-accordion>
-
+    </div>
 </div>
-
+<div class="container"><br/><br/><br/><br/>
+    <div id="firebaseui-auth-container"></div>
+</div>
 </body>
 </html>
