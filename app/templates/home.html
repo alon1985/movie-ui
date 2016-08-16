@@ -1,0 +1,32 @@
+<div class="navbar navbar-light navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a ui-sref="list">My List</a></li>
+                <li><a ui-sref="add">Add Movie</a></li>
+                <li><a ui-sref="stats">My Stats</a></li>
+                <li><a ui-sref="upcoming">My Watchlist</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" data-target="#" data-toggle="dropdown">Export
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0)">Export to CSV</a></li>
+                            <li><a href="javascript:void(0)">Sync to Cloud</a></li>
+                        </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="javascript:void(0)" data-target="#"  data-toggle="dropdown"><img src="https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png" id="user-account" class="profile-image img-circle" width="24" height="24" alt="Circular Image" ></img>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a id="widgetSignIn" ng-click="login()">Login</a></li>
+                        <li><a id="widgetSignOut" ng-click="logout()">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div ui-view></div>
+</div>
