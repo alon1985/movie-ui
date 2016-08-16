@@ -1,5 +1,4 @@
-<div id="loginModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+<div id="loginModal" class="modal fade">
         <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
         <script>
             // Initialize Firebase
@@ -12,7 +11,8 @@
             firebase.initializeApp(config);
         </script>
         <script src="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.js"></script>
-        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.css" />
+        <link type="text/css" rel="stylesheet"
+              href="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script type="text/javascript">
             // FirebaseUI config.
@@ -48,15 +48,5 @@
             ui.start('#firebaseui-auth-container', uiConfig);
         </script>
         <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
-            </div>
-            <div class="modal-body">
-                <div id="firebaseui-auth-container"></div>
-            </div>
-        </div>
-
+        <div id="firebaseui-auth-container"></div>
     </div>
-</div>
