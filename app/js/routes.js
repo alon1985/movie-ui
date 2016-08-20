@@ -1,54 +1,47 @@
 angular.module('app.routes', [])
 
-    .config(function($stateProvider, $urlRouterProvider, CacheFactoryProvider) {
+    .config(function($routeProvider, $locationProvider, CacheFactoryProvider) {
         angular.extend(CacheFactoryProvider.defaults, { maxAge: 24 * 60 * 60 * 1000 });
         // Ionic uses AngularUI Router which uses the concept of states
         // Learn more here: https://github.com/angular-ui/ui-router
         // Set up the various states which the app can be in.
         // Each state's controller can be found in controllers.js
-        $stateProvider
+
+        $routeProvider.otherwise('/');
+
+        $routeProvider
 
 
-
-            .state('home', {
-                url: '/home',
-                templateUrl: 'templates/home.html',
-                controller: 'mainController'
-            })
-
-            .state('list', {
-                url: '/list',
+            .when('/home', {
                 templateUrl: 'templates/list.html',
-                controller: 'listController',
-                views: {
-                    'details': {
-                        templateUrl: 'templates/details.html',
-                        controller: 'detailsController',
-                        params: ['movieSeen']
-                    }
-                }
-
+                controller: 'listController'
             })
-            .state('add', {
-                url: '/add',
+            .when('/list', {
+                templateUrl: 'templates/list.html',
+                controller: 'listController'
+            })
+            .when('/detail', {
+                templateUrl: 'templates/details.html',
+                controller: 'detailsController'
+            })
+            .when('/add', {
                 templateUrl: 'templates/add.html',
                 controller: 'addController'
 
             })
-            .state('stats', {
-                url: '/stats',
+            .when('/stats', {
                 templateUrl: 'templates/stats.html',
                 controller: 'statsController'
 
             })
-            .state('upcoming', {
-                url: '/upcoming',
-                templateUrl: 'templates/upcoming.html',
-                controller: 'upcomingController'
+            .when('/watchlist', {
+                templateUrl: 'templates/watchlist.html',
+                controller: 'watchlistController'
 
             })
 
-        $urlRouterProvider.otherwise('/home')
+        $locationProvider.html5Mode(true);
+
 
 
 

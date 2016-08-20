@@ -12,10 +12,6 @@ angular.module('app.controllers', [])
         $scope.logout = function() {
             firebase.auth().signOut();
         };
-
-        /**
-         * Displays the UI for a signed in user.
-         */
         var handleSignedInUser = function(user) {
             $scope.user = user;
             if (user.photoURL) {
@@ -27,7 +23,9 @@ angular.module('app.controllers', [])
             document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
         };
     })
-    .controller('listController', function($scope, movieService, movieSelectionService, $state) {
+
+
+    .controller('listController', function($scope, movieService, movieSelectionService) {
         movieService.getMovies().then(function(movies) {
             $scope.movies = movies;
         });

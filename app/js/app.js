@@ -1,1 +1,1 @@
-angular.module('app', ['ui.router', 'ngAnimate', 'ui.bootstrap', 'angular-cache', 'chart.js', 'app.controllers', 'app.routes', 'app.services', 'app.directives'])
+angular.module('app', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'angular-cache', 'chart.js', 'app.controllers', 'app.routes', 'app.services', 'app.directives'])
