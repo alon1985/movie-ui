@@ -76,3 +76,34 @@ angular.module('app.controllers', [])
             $uibModalInstance.close();
         };
     })
+    .controller('statsController', function($scope, movieService) {
+        $scope.series = ['In Theaters', 'Video'];
+        movieService.getMovieStats().then(function(response) {
+            $scope.options = {legend: {display: true}, showTooltips: false};
+            $scope.totalMovies = response.totalMovies;
+
+            var labels = [];
+            var moviesPerYear = [];
+            response.moviesPerYear.forEach(function(mPY) {
+                labels.push(mPY.year);
+                moviesPerYear.push(mPY.total);
+            });
+            $scope.labels = labels;
+            $scope.moviesPerYear = moviesPerYear;
+
+            var moviesPerYearTheaters = [];
+            var moviesPerYearVideo = [];
+            response.movieFormatsPerYear.forEach(function(mFPY) {
+                var formatTotals = mFPY.formatTotals;
+                if (formatTotals[0].format === 'In Theaters') {
+                    moviesPerYearTheaters.push(formatTotals[0].total);
+                    moviesPerYearVideo.push(formatTotals[1].total);
+                } else {
+                    moviesPerYearVideo.push(formatTotals[0].total);
+                    moviesPerYearTheaters.push(formatTotals[1].total);
+                }
+            });
+            var moviesPerYearByFormat = [moviesPerYearTheaters, moviesPerYearVideo];
+            $scope.moviesPerYearByFormat = moviesPerYearByFormat;
+        });
+    })
