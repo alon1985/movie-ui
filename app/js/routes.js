@@ -13,16 +13,13 @@ angular.module('app.routes', [])
 
 
             .when('/home', {
-                templateUrl: 'templates/list.html',
-                controller: 'listController'
+                templateUrl: 'templates/home.html',
+                controller: 'mainController'
             })
             .when('/list', {
                 templateUrl: 'templates/list.html',
-                controller: 'listController'
-            })
-            .when('/detail', {
-                templateUrl: 'templates/details.html',
-                controller: 'detailsController'
+                controller: 'listController',
+                params: ['user']
             })
             .when('/add', {
                 templateUrl: 'templates/add.html',

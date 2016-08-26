@@ -1,6 +1,6 @@
 angular.module('app.controllers', [])
 
-    .controller('mainController', function($scope) {
+    .controller('mainController', function($scope, userSelectionService) {
         firebase.auth().onAuthStateChanged(function(user) {
             user ? handleSignedInUser(user) : handleSignedOutUser();
         });
@@ -13,7 +13,7 @@ angular.module('app.controllers', [])
             firebase.auth().signOut();
         };
         var handleSignedInUser = function(user) {
-            $scope.user = user;
+            userSelectionService.setUser(user);
             if (user.photoURL) {
                 document.getElementById('user-account').src = user.photoURL;
             }
@@ -25,14 +25,39 @@ angular.module('app.controllers', [])
     })
 
 
-    .controller('listController', function($scope, movieService, movieSelectionService) {
-        movieService.getMovies("?style=list").then(function(movies) {
-            $scope.movies = movies;
-        });
+    .controller('listController', function($scope, movieService, movieSelectionService, userSelectionService, $uibModal) {
+        $scope.searchQuery = '';
+        $scope.animationsEnabled = true;
+        $scope.user = userSelectionService.getUser();
+        if($scope.user.uid){
+            movieService.getMovies("?style=list&uid=" + $scope.user.uid).then(function(movies) {
+                $scope.movies = movies;
+            });
 
-        $scope.setMovie = function(movie) {
-            movieSelectionService.setMovie(movie);
-            $state.go('tabsController.movieDetails');
+        }
+
+        $scope.showMovieDetails = function(movie){
+            movieService.getMovieInfo(movie.Title).then(function(response) {
+                if(response.data.Title){
+                    $uibModal.open({
+                        animation: $scope.animationsEnabled,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'movieDetailsModal.html',
+                        controller: 'movieModalController',
+                        controllerAs: '$ctrl',
+                        resolve: {
+                            movie: function () {
+                                return response.data;
+                            }
+                        }
+                    });
+                };
+                });
+            };
+
+        $scope.toggleAnimation = function () {
+            $scope.animationsEnabled = !$scope.animationsEnabled;
         };
 
         $scope.doRefresh = function() {
@@ -42,5 +67,12 @@ angular.module('app.controllers', [])
                 // Stop the ion-refresher from spinning
                 $scope.$broadcast('scroll.refreshComplete');
             });
+        };
+    })
+    .controller('movieModalController', function ($uibModalInstance, movie){
+        var $ctrl = this;
+        $ctrl.movie = movie;
+        $ctrl.ok = function () {
+            $uibModalInstance.close();
         };
     })
