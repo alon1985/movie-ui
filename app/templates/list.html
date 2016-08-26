@@ -4,10 +4,9 @@
             <!-- Default panel contents -->
             <div class="panel-heading" style="background-color: #009688">
                 <div class="row">
-                    <div class="col-sm-3">Movie</div>
-                    <div class="col-sm-3">Year(s) Seen</div>
-                    <div class="col-sm-3">Format(s) Seen</div>
-                    <div class="col-sm-3"></div>
+                    <div class="col-sm-4">Movie</div>
+                    <div class="col-sm-4">Year(s) Seen</div>
+                    <div class="col-sm-4">Format(s) Seen</div>
                 </div>
             </div>
             <div class="panel-body">
@@ -15,7 +14,7 @@
                     <input type="text" class="form-control" placeholder="Search Movie List" ng-model="searchQuery">
                 </div>
             </div>
-            <table class="table">
+            <table class="table table-responsive table-striped">
                 <tbody>
                 <tr ng-repeat="movie in movies | filter:searchQuery">
                     <td>{{ movie.Title }}</td>
