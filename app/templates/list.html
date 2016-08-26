@@ -1,1 +1,29 @@
-<div>list</div>
+<div>
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading" style="background-color: #009688">
+            <div class="row">
+            <div class="col-sm-4">Movie</div>
+            <div class="col-sm-4">Year(s) Seen</div>
+            <div class="col-sm-4">Format(s) Seen</div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="form-group label-floating">
+                <label for="searchQuery\" class="control-label">Search Movie List</label>
+                <input type="list-search" class="form-control" id="searchQuery">
+                <span class="help-block">Search title, year or format</span>
+            </div>
+        </div>
+        <table class="table table-hover">
+        <tbody>
+        <tr ng-repeat="movie in movies">
+            <td>{{ movie.Title }}</td>
+            <td>{{ movie.Year }}</td>
+            <td>{{ movie.Format }}</td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+</div>

@@ -26,7 +26,7 @@ angular.module('app.controllers', [])
 
 
     .controller('listController', function($scope, movieService, movieSelectionService) {
-        movieService.getMovies().then(function(movies) {
+        movieService.getMovies("?style=list").then(function(movies) {
             $scope.movies = movies;
         });
 

@@ -3,9 +3,8 @@ angular.module('app.services', []).factory('movieService', function($http, Cache
     if (!CacheFactory.get('movieCache')) {
         movieCache = CacheFactory('movieCache');
     }
-    var getMovies = function() {
-
-        return $http.get('https://alon-film-id.appspot.com/movies/search').then(function(response) {
+    var getMovies = function(style) {
+        return $http.get('https://alon-film-id.appspot.com/movies/search' + style).then(function(response) {
             if (response.data) {
                 movieCache.put('movieList', response.data);
                 return response.data;
