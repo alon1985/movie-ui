@@ -15,7 +15,8 @@
     "serve": "node app/server.js"
   },
   "dependencies": {
-    "angular": "^1.5.7",
+    "angular": "^1.5.8",
+    "angular-cache": "^4.6.0",
     "bootstrap": "^3.3.6",
     "express": "^4.14.0"
   }
