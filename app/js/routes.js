@@ -7,39 +7,34 @@ angular.module('app.routes', [])
         // Set up the various states which the app can be in.
         // Each state's controller can be found in controllers.js
 
-        $routeProvider.otherwise('/home');
+        $routeProvider.otherwise('/home/');
 
         $routeProvider
 
 
-            .when('/home', {
+            .when('/home/', {
                 templateUrl: 'templates/home.html',
                 controller: 'mainController'
             })
-            .when('/list', {
+            .when('/list/', {
                 templateUrl: 'templates/list.html',
                 controller: 'listController',
                 params: ['user']
             })
-            .when('/add', {
+            .when('/add/', {
                 templateUrl: 'templates/add.html',
                 controller: 'addController'
 
             })
-            .when('/stats', {
+            .when('/stats/', {
                 templateUrl: 'templates/stats.html',
                 controller: 'statsController'
 
             })
-            .when('/watchlist', {
+            .when('/watchlist/', {
                 templateUrl: 'templates/watchlist.html',
                 controller: 'watchlistController'
 
             })
-
-        $locationProvider.html5Mode(true);
-
-
-
 
     });

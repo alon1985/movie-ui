@@ -1,1 +1,53 @@
-<div>add</div>
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Add a Movie</h3>
+        </div>
+        <div class="panel-body">
+            <div class="panel-body">
+                <div class="container">
+                <form>
+                    <div class="row">
+                        <div class="col-md-4"><label for="inputMovie" class="control-label">Movie Title</label>
+                        </div>
+                        <div class="col-md-8"><input type="text" ng-model="movieTitle" class="form-control"
+                                                     id="inputMovie" placeholder="Movie Title"></div>
+                    </div><br/><br/>
+                    <div class="row">
+                        <div class="col-md-4"><label class="control-label">Movie Format</label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="radio radio-primary">
+                                    <input type="radio" ng-model="movieFormat" ng-value="'In Theaters'"
+                                           name="formatRadio" id="formatRadio1" value="'In Theaters'" checked="">
+                                    In Theaters
+                            </div>
+                            <div class="radio radio-primary">
+                                    <input type="radio" ng-model="movieFormat" ng-value="'Video'" name="formatRadio"
+                                           id="formatRadio2" value="'Video'">
+                                    Video
+                            </div>
+                        </div>
+                    </div><br/><br/>
+                    <div class="row">
+                        <div class="col-md-4"><label for="inputYear" class="control-label">Year Seen</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="number" ng-model="movieYear" class="form-control"
+                                   id="inputYear" placeholder="Movie Year">
+                        </div>
+                    </div>
+                    <br/><br/><br/>
+                    <div class="row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-8">
+                            <button type="submit" class="btn btn-primary" ng-click="addMovie()">Add Movie</button></div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -6,7 +6,7 @@ angular.module('app.services', [])
         }
         var getMovies = function(style) {
             return $http.get('https://alon-film-id.appspot.com/movies/search' + style).then(function(response) {
-                if (response.data) {
+                if (response.status === 200) {
                     movieCache.put('movieList', response.data);
                     return response.data;
                 } else {

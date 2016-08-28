@@ -107,3 +107,32 @@ angular.module('app.controllers', [])
             $scope.moviesPerYearByFormat = moviesPerYearByFormat;
         });
     })
+.controller('addController', function($scope, $uibModal){
+    $scope.addMovie = function() {
+        $uibModal.open({
+            animation: $scope.animationsEnabled,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'confirmMovieModal.html',
+            controller: 'movieModalController2',
+            controllerAs: '$ctrl2',
+            resolve: {
+                movie: function() {
+                    var movieReturned = {
+                        Title: $scope.movieTitle,
+                        Year: $scope.movieYear,
+                        Formmat: $scope.movieFormat
+                    };
+                    return movieReturned;
+                }
+            }
+        });
+    };
+})
+    .controller('movieModalController2', function ($uibModalInstance, movie){
+        var $ctrl2 = this;
+        $ctrl2.movie = movie;
+        $ctrl2.ok = function () {
+            $uibModalInstance.close();
+        };
+    })

@@ -59,10 +59,10 @@
     <div class="container-fluid">
         <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="list">My List</a></li>
-                <li><a href="add">Add Movie</a></li>
-                <li><a href="stats">My Stats</a></li>
-                <li><a href="watchlist">My Watchlist</a></li>
+                <li><a href="#/list">My List</a></li>
+                <li><a href="#/add">Add Movie</a></li>
+                <li><a href="#/stats">My Stats</a></li>
+                <li><a href="#/watchlist">My Watchlist</a></li>
                 <li class="dropdown">
                     <a href="javascript:void(0)" data-target="#" data-toggle="dropdown">Export
                         <ul class="dropdown-menu">
@@ -121,6 +121,59 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="$ctrl.ok()">Close</button>
+        </div>
+    </script>
+</div>
+<div ng-controller="addController as $ctrl2">
+    <script type="text/ng-template" id="confirmMovieModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Confirm Movie Details</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <div class="list-group">
+                                <div class="list-group-item">
+                                    <div class="row-action-primary">
+                                        <i class="material-icons">movie_creation</i>
+                                    </div>
+                                    <div class="row-content">
+                                        <div class="action-secondary"></div>
+                                        <h3 class="list-group-item-heading">{{$ctrl2.movie.Title}}</h3>
+                                        <p class="list-group-item-text">Movie Title</p>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="row-action-primary">
+                                        <i class="material-icons">movie_creation</i>
+                                    </div>
+                                    <div class="row-content">
+                                        <div class="action-secondary"></div>
+                                        <h3 class="list-group-item-heading">{{$ctrl2.movie.Format}}</h3>
+                                        <p class="list-group-item-text">Movie Format</p>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="row-action-primary">
+                                        <i class="material-icons">movie_creation</i>
+                                    </div>
+                                    <div class="row-content">
+                                        <div class="action-secondary"></div>
+                                        <h3 class="list-group-item-heading">{{$ctrl2.movie.Year}}</h3>
+                                        <p class="list-group-item-text">Year Seen</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="$ctrl2.ok()">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="$ctrl2.ok()">Cancel</button>
         </div>
     </script>
 </div>
