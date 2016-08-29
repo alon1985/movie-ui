@@ -15,13 +15,23 @@ angular.module('app.services', [])
             });
         };
         var getMovieInfo = function(title) {
-            var url = 'http://www.omdbapi.com/?t=' + title + '&y=&plot=short&r=json';
-            return $http.get(url).success(function(response) {
-                return response;
-            });
+            if(movieCache.get(title)){
+                return movieCache.get(title);
+            }
+            else {
+                var url = 'http://www.omdbapi.com/?t=' + title + '&y=&plot=short&r=json';
+                return $http.get(url).success(function(response) {
+                    movieCache.put(response);
+                    return response;
+                });
+            }
         };
-        var getMovieStats = function() {
-            return $http.get('http://alon-film-id.appspot.com/movies/stats').then(function(response) {
+        var getMovieStats = function(userId) {
+            var query = '';
+            if(userId){
+                query = '?' + userId;
+            }
+            return $http.get('http://alon-film-id.appspot.com/movies/stats' + query).then(function(response) {
                 if (response.data) {
                     movieCache.put('movieStats', response.data);
                     return response.data;
@@ -35,7 +45,7 @@ angular.module('app.services', [])
             return $http.get('http://alon-film-id.appspot.com/movies/upload?key=' + key).then(function(response) {
                 return response;
             });
-        }
+        };
 
         var postMovie = function(title, format, year) {
             var data = {
@@ -59,17 +69,6 @@ angular.module('app.services', [])
             postMovie: postMovie,
             getMovieStats: getMovieStats,
             syncMovies: syncMovies
-        };
-    })
-    .factory('movieSelectionService', function() {
-        var movie = {};
-        return {
-            getMovie: function() {
-                return movie;
-            },
-            setMovie: function(movieParam) {
-                movie = movieParam;
-            }
         };
     })
     .factory('userSelectionService', function() {

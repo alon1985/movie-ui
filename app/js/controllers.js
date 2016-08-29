@@ -24,21 +24,20 @@ angular.module('app.controllers', [])
         };
     })
 
-
     .controller('listController', function($scope, movieService, movieSelectionService, userSelectionService, $uibModal) {
         $scope.searchQuery = '';
         $scope.animationsEnabled = true;
         $scope.user = userSelectionService.getUser();
-        if($scope.user.uid){
+        if ($scope.user.uid) {
             movieService.getMovies("?style=list&uid=" + $scope.user.uid).then(function(movies) {
                 $scope.movies = movies;
             });
 
         }
 
-        $scope.showMovieDetails = function(movie){
+        $scope.showMovieDetails = function(movie) {
             movieService.getMovieInfo(movie.Title).then(function(response) {
-                if(response.data.Title){
+                if (response.data.Title) {
                     $uibModal.open({
                         animation: $scope.animationsEnabled,
                         ariaLabelledBy: 'modal-title',
@@ -47,16 +46,17 @@ angular.module('app.controllers', [])
                         controller: 'movieModalController',
                         controllerAs: '$ctrl',
                         resolve: {
-                            movie: function () {
+                            movie: function() {
                                 return response.data;
                             }
                         }
                     });
-                };
-                });
-            };
+                }
+                ;
+            });
+        };
 
-        $scope.toggleAnimation = function () {
+        $scope.toggleAnimation = function() {
             $scope.animationsEnabled = !$scope.animationsEnabled;
         };
 
@@ -69,70 +69,95 @@ angular.module('app.controllers', [])
             });
         };
     })
-    .controller('movieModalController', function ($uibModalInstance, movie){
+    .controller('movieModalController', function($uibModalInstance, movie) {
         var $ctrl = this;
         $ctrl.movie = movie;
-        $ctrl.ok = function () {
+        $ctrl.ok = function() {
             $uibModalInstance.close();
         };
     })
-    .controller('statsController', function($scope, movieService) {
-        $scope.series = ['In Theaters', 'Video'];
-        movieService.getMovieStats().then(function(response) {
-            $scope.options = {legend: {display: true}, showTooltips: false};
-            $scope.totalMovies = response.totalMovies;
+    .controller('statsController', function($scope, movieService, userSelectionService) {
+        $scope.user = userSelectionService.getUser();
+        if ($scope.user.uid) {
+            $scope.series = ['In Theaters', 'Video'];
+            movieService.getMovieStats($scope.user.uid).then(function(response) {
+                $scope.options = {legend: {display: true}, showTooltips: false};
+                $scope.totalMovies = response.totalMovies;
 
-            var labels = [];
-            var moviesPerYear = [];
-            response.moviesPerYear.forEach(function(mPY) {
-                labels.push(mPY.year);
-                moviesPerYear.push(mPY.total);
-            });
-            $scope.labels = labels;
-            $scope.moviesPerYear = moviesPerYear;
+                var labels = [];
+                var moviesPerYear = [];
+                response.moviesPerYear.forEach(function(mPY) {
+                    labels.push(mPY.year);
+                    moviesPerYear.push(mPY.total);
+                });
+                $scope.labels = labels;
+                $scope.moviesPerYear = moviesPerYear;
 
-            var moviesPerYearTheaters = [];
-            var moviesPerYearVideo = [];
-            response.movieFormatsPerYear.forEach(function(mFPY) {
-                var formatTotals = mFPY.formatTotals;
-                if (formatTotals[0].format === 'In Theaters') {
-                    moviesPerYearTheaters.push(formatTotals[0].total);
-                    moviesPerYearVideo.push(formatTotals[1].total);
-                } else {
-                    moviesPerYearVideo.push(formatTotals[0].total);
-                    moviesPerYearTheaters.push(formatTotals[1].total);
-                }
+                var moviesPerYearTheaters = [];
+                var moviesPerYearVideo = [];
+                response.movieFormatsPerYear.forEach(function(mFPY) {
+                    var formatTotals = mFPY.formatTotals;
+                    if (formatTotals[0].format === 'In Theaters') {
+                        moviesPerYearTheaters.push(formatTotals[0].total);
+                        moviesPerYearVideo.push(formatTotals[1].total);
+                    } else {
+                        moviesPerYearVideo.push(formatTotals[0].total);
+                        moviesPerYearTheaters.push(formatTotals[1].total);
+                    }
+                });
+                var moviesPerYearByFormat = [moviesPerYearTheaters, moviesPerYearVideo];
+                $scope.moviesPerYearByFormat = moviesPerYearByFormat;
             });
-            var moviesPerYearByFormat = [moviesPerYearTheaters, moviesPerYearVideo];
-            $scope.moviesPerYearByFormat = moviesPerYearByFormat;
-        });
+        }
     })
-.controller('addController', function($scope, $uibModal){
-    $scope.addMovie = function() {
-        $uibModal.open({
-            animation: $scope.animationsEnabled,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'confirmMovieModal.html',
-            controller: 'movieModalController2',
-            controllerAs: '$ctrl2',
-            resolve: {
-                movie: function() {
-                    var movieReturned = {
-                        Title: $scope.movieTitle,
-                        Year: $scope.movieYear,
-                        Formmat: $scope.movieFormat
-                    };
-                    return movieReturned;
+    .controller('addController', function($scope, $uibModal) {
+        $scope.addMovie = function() {
+            $uibModal.open({
+                animation: $scope.animationsEnabled,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'confirmMovieModal.html',
+                controller: 'movieModalController2',
+                controllerAs: '$ctrl2',
+                resolve: {
+                    movie: function() {
+                        var movieReturned = {
+                            Title: $scope.movieTitle,
+                            Year: $scope.movieYear,
+                            Format: $scope.movieFormat
+                        };
+                        return movieReturned;
+                    }
                 }
-            }
-        });
-    };
-})
-    .controller('movieModalController2', function ($uibModalInstance, movie){
+            });
+        };
+    })
+    .controller('movieModalController2', function($scope, $uibModalInstance, $uibModal, movie, movieService) {
         var $ctrl2 = this;
         $ctrl2.movie = movie;
-        $ctrl2.ok = function () {
+        $ctrl2.ok = function() {
+            movieService.postMovie($scope.movie.Title, $scope.Format, $scope.Year)
+                .then(function(result) {
+                    $uibModal.open({
+                        animation: $scope.animationsEnabled,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'postMovieModal.html',
+                        controller: 'movieModalController3',
+                        controllerAs: '$ctrl3',
+                        resolve: {
+                            message: (result === 0 || !result) ? 'Failed to Add Movie' : 'Movie Added'
+                        }
+                    });
+                });
+        };
+        $ctrl2.cancel = function() {
+            $uibModalInstance.close();
+        };
+    })
+    .controller('movieModalController3', function($scope, $uibModalInstance) {
+        var $ctrl3 = this;
+        $ctrl3.ok = function() {
             $uibModalInstance.close();
         };
     })

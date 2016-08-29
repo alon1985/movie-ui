@@ -172,10 +172,28 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="$ctrl2.ok()">Submit</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="$ctrl2.ok()">Cancel</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="$ctrl2.ok()">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="$ctrl2.cancel()">Cancel</button>
         </div>
     </script>
+    <div ng-controller="addController as $ctrl3">
+        <script type="text/ng-template" id="postMovieModal.html">
+            <div class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Your Movie</h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{$ctrl3.message}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="$ctrl3.ok()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
