@@ -24,8 +24,7 @@ angular.module('app.controllers', [])
         };
     })
 
-    .controller('listController', function($scope, movieService, movieSelectionService, userSelectionService, $uibModal) {
-        $scope.searchQuery = '';
+    .controller('listController', function($scope, movieService, userSelectionService, $uibModal) {
         $scope.animationsEnabled = true;
         $scope.user = userSelectionService.getUser();
         if ($scope.user.uid) {
@@ -34,7 +33,6 @@ angular.module('app.controllers', [])
             });
 
         }
-
         $scope.showMovieDetails = function(movie) {
             movieService.getMovieInfo(movie.Title).then(function(response) {
                 if (response.data.Title) {
@@ -51,8 +49,7 @@ angular.module('app.controllers', [])
                             }
                         }
                     });
-                }
-                ;
+                };
             });
         };
 
@@ -109,8 +106,21 @@ angular.module('app.controllers', [])
                 $scope.moviesPerYearByFormat = moviesPerYearByFormat;
             });
         }
+        $scope.chartClick = function (points, evt) {
+            console.log(points[0].value); // 0 -> Series A, 1 -> Series B
+            //points[0]._view.label
+            //points[0]._view.datasetLabel
+        };
     })
-    .controller('addController', function($scope, $uibModal) {
+    .controller('addController', function($scope, $uibModal, $http) {
+        $scope.getMovies = function(val) {
+            return $http.get('https://api.themoviedb.org/3/search/movie?api_key=2298bae6fa115550839717f1fb686552&query=' +val, {
+            }).then(function(response){
+                return response.data.results.map(function(item){
+                    return item.original_title;
+                });
+            });
+        };
         $scope.addMovie = function() {
             $uibModal.open({
                 animation: $scope.animationsEnabled,

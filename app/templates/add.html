@@ -3,15 +3,15 @@
         <div class="panel-heading">
             <h3 class="panel-title">Add a Movie</h3>
         </div>
-        <div class="panel-body">
-            <div class="panel-body">
+        </div>
                 <div class="container">
                 <form>
                     <div class="row">
                         <div class="col-md-4"><label for="inputMovie" class="control-label">Movie Title</label>
                         </div>
-                        <div class="col-md-8"><input type="text" ng-model="movieTitle" class="form-control"
-                                                     id="inputMovie" placeholder="Movie Title"></div>
+                        <div class="col-md-8" style="overflow: visible !important; opacity:1 !important">
+                            <input type="text" id="inputMovie" ng-model="movieTitle" placeholder="Movie Title"  uib-typeahead="movie for movie in getMovies($viewValue)" class="form-control">
+                        </div>
                     </div><br/><br/>
                     <div class="row">
                         <div class="col-md-4"><label class="control-label">Movie Format</label>
@@ -47,7 +47,5 @@
                 </form>
                 </div>
             </div>
-        </div>
-    </div>
 
 </div>

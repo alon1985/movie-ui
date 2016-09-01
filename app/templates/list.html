@@ -11,12 +11,20 @@
             </div>
             <div class="panel-body">
                 <div class="form-group has-success">
-                    <input type="text" class="form-control" placeholder="Search Movie List" ng-model="searchQuery">
+                    <div class="togglebutton">
+                        <label>
+                            <input type="checkbox" ng-model="advanced"> Advanced Search
+                        </label>
+                    </div>
+                    <input type="text" class="form-control" ng-model="search.$" placeholder="Search List" ng-hide="advanced">
+                    <input type="text" class="form-control" ng-model="search.Title" placeholder="Search Movie Title" ng-show="advanced">
+                    <input type="text" class="form-control" ng-model="search.Year" placeholder="Search Years" ng-show="advanced">
+                    <input type="text" class="form-control" ng-model="search.Format" placeholder="Search Formats" ng-show="advanced">
                 </div>
             </div>
             <table class="table table-responsive table-striped">
                 <tbody>
-                <tr ng-repeat="movie in movies | filter:searchQuery">
+                <tr ng-repeat="movie in movies | filter:search:false">
                     <td>{{ movie.Title }}</td>
                     <td>{{ movie.Year }}</td>
                     <td>{{ movie.Format }}</td>

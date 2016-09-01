@@ -29,7 +29,7 @@ angular.module('app.services', [])
         var getMovieStats = function(userId) {
             var query = '';
             if(userId){
-                query = '?' + userId;
+                query = '?uid=' + userId;
             }
             return $http.get('http://alon-film-id.appspot.com/movies/stats' + query).then(function(response) {
                 if (response.data) {
