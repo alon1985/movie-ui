@@ -14,6 +14,11 @@ angular.module('app.services', [])
                 }
             });
         };
+        var exportMyMovies = function(uid){
+            return $http.get('https://alon-film-id.appspot.com/movies/export?uid=' + uid).then(function(response){
+                return response.data;
+            });
+        };
         var getMovieInfo = function(title) {
             if(movieCache.get(title)){
                 return movieCache.get(title);
@@ -48,18 +53,14 @@ angular.module('app.services', [])
                 return response.data;
             });
         };
-        var syncMovies = function(key) {
-            return $http.get('http://alon-film-id.appspot.com/movies/upload?key=' + key).then(function(response) {
-                return response;
-            });
-        };
 
-        var postMovie = function(title, format, year) {
+        var postMovie = function(title, format, year, uid) {
             var data = {
                 'title': title,
                 'year': year,
                 'format': format,
-                'consumer': 'al3185on1'
+                'consumer': 'al3185on1',
+                'uid': uid
             };
             var parameter = JSON.stringify(data);
             return $http.post('https://alon-film-id.appspot.com/movies/add', parameter, {headers: {'Content-Type': 'application/json'}})
@@ -75,7 +76,7 @@ angular.module('app.services', [])
             getMovieInfo: getMovieInfo,
             postMovie: postMovie,
             getMovieStats: getMovieStats,
-            syncMovies: syncMovies
+            exportMyMovies: exportMyMovies
         };
     })
     .factory('userSelectionService', function() {

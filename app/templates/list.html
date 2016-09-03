@@ -1,6 +1,6 @@
 <form>
     <div>
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" ng-if="userSignedIn()">
             <!-- Default panel contents -->
             <div class="panel-heading" style="background-color: #009688">
                 <div class="row">
@@ -35,4 +35,9 @@
             </table>
         </div>
     </div>
+    <div class="jumbotron" ng-if="userSignedOut()">
+        <h1 style="text-align: center">Your Movies</h1><br/>
+        <p style="text-align: center">Please Sign in to access your list or add new movies</p>
+    </div>
+
 </form>

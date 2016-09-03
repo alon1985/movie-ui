@@ -1,5 +1,5 @@
 <div>
-    <div class="panel panel-default">
+    <div class="panel panel-default" ng-if="userSignedIn()">
         <div class="panel-heading">
             <h3 class="panel-title">Add a Movie</h3>
         </div>
@@ -51,5 +51,9 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div class="jumbotron" ng-if="userSignedOut()">
+        <h1 style="text-align: center">Your Movies</h1><br/>
+        <p style="text-align: center">Please Sign in to add a movie to your list</p>
     </div>
 </div>

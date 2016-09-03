@@ -1,10 +1,9 @@
 angular.module('app.controllers', [])
 
-    .controller('mainController', function($scope, userSelectionService) {
+    .controller('mainController', function($scope, userSelectionService, movieService) {
         firebase.auth().onAuthStateChanged(function(user) {
             user ? handleSignedInUser(user) : handleSignedOutUser();
         });
-        $scope.user = null;
         $scope.animationsEnabled = true;
         $scope.login = function() {
             window.open('/templates/authTemplate.html', 'Sign In', 'width=985,height=735');
@@ -12,6 +11,22 @@ angular.module('app.controllers', [])
         $scope.logout = function() {
             firebase.auth().signOut();
         };
+
+        $scope.download = function() {
+            var user = userSelectionService.getUser();
+            if (user) {
+                movieService.exportMyMovies(user.uid).then(function(result) {
+                    var anchor = angular.element('<a/>');
+                    anchor.attr({
+                        href: 'data:attachment/csv;charset=utf-8,' + encodeURI(result),
+                        target: '_blank',
+                        download: 'movies.csv'
+                    })[0].click();
+                })
+
+            }
+        };
+
         var handleSignedInUser = function(user) {
             userSelectionService.setUser(user);
             if (user.photoURL) {
@@ -20,6 +35,7 @@ angular.module('app.controllers', [])
 
         };
         var handleSignedOutUser = function(user) {
+            userSelectionService.setUser(null);
             document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
         };
     })
@@ -27,7 +43,15 @@ angular.module('app.controllers', [])
     .controller('listController', function($scope, movieService, userSelectionService, $uibModal) {
         $scope.animationsEnabled = true;
         $scope.user = userSelectionService.getUser();
-        if ($scope.user.uid) {
+
+        $scope.userSignedIn = function(){
+            return $scope.user!=null;
+        };
+        $scope.userSignedOut = function(){
+            return $scope.user==null;
+        };
+
+        if ($scope.user && $scope.user.uid) {
             movieService.getMovies("?style=list&uid=" + $scope.user.uid).then(function(movies) {
                 $scope.movies = movies;
             });
@@ -49,21 +73,13 @@ angular.module('app.controllers', [])
                             }
                         }
                     });
-                };
+                }
+                ;
             });
         };
 
         $scope.toggleAnimation = function() {
             $scope.animationsEnabled = !$scope.animationsEnabled;
-        };
-
-        $scope.doRefresh = function() {
-            movieService.getMovies().then(function(movies) {
-                $scope.movies = movies;
-            }).finally(function() {
-                // Stop the ion-refresher from spinning
-                $scope.$broadcast('scroll.refreshComplete');
-            });
         };
     })
     .controller('movieModalController', function($uibModalInstance, movie) {
@@ -75,7 +91,16 @@ angular.module('app.controllers', [])
     })
     .controller('statsController', function($scope, movieService, userSelectionService) {
         $scope.user = userSelectionService.getUser();
-        if ($scope.user.uid) {
+
+        $scope.userSignedIn = function(){
+            return $scope.user!=null;
+        };
+        $scope.userSignedOut = function(){
+            return $scope.user==null;
+        };
+
+
+        if ($scope.user && $scope.user.uid) {
             $scope.series = ['In Theaters', 'Video'];
             movieService.getMovieStats($scope.user.uid).then(function(response) {
                 $scope.options = {legend: {display: true}, showTooltips: false};
@@ -106,23 +131,31 @@ angular.module('app.controllers', [])
                 $scope.moviesPerYearByFormat = moviesPerYearByFormat;
             });
         }
-        $scope.chartClick = function (points, evt) {
+        $scope.chartClick = function(points, evt) {
             console.log(points[0].value); // 0 -> Series A, 1 -> Series B
             //points[0]._view.label
             //points[0]._view.datasetLabel
         };
     })
-    .controller('addController', function($scope, $uibModal, $http) {
+    .controller('addController', function($scope, $uibModal, $http, userSelectionService) {
         $scope.selectedMovie = null;
+        $scope.user = userSelectionService.getUser();
+
+        $scope.userSignedIn = function(){
+            return $scope.user!=null;
+        };
+        $scope.userSignedOut = function(){
+            return $scope.user==null;
+        };
+
         $scope.getMovies = function(val) {
-            return $http.get('https://api.themoviedb.org/3/search/movie?api_key=2298bae6fa115550839717f1fb686552&query=' +val, {
-            }).then(function(response){
-                return response.data.results.map(function(item){
+            return $http.get('https://api.themoviedb.org/3/search/movie?api_key=2298bae6fa115550839717f1fb686552&query=' + val, {}).then(function(response) {
+                return response.data.results.map(function(item) {
                     return item;
                 });
             });
         };
-        $scope.movieSelected = function(movieSelected){
+        $scope.movieSelected = function(movieSelected) {
             $scope.selectedMovie = movieSelected;
         };
 
@@ -137,7 +170,7 @@ angular.module('app.controllers', [])
                 resolve: {
                     movie: function() {
                         var movieReturned = {
-                            Year:$scope.movieYear,
+                            Year: $scope.movieYear,
                             Format: $scope.movieFormat
                         };
                         movieReturned.Title = $scope.selectedMovie ? $scope.selectedMovie.original_title : $scope.movieTitle;
@@ -152,8 +185,9 @@ angular.module('app.controllers', [])
     .controller('movieModalController2', function($scope, $uibModalInstance, $uibModal, movie, movieService) {
         var $ctrl2 = this;
         $ctrl2.movie = movie;
+        $scope.user = userSelectionService.getUser();
         $ctrl2.ok = function() {
-            movieService.postMovie($scope.movie.Title, $scope.Format, $scope.Year)
+            movieService.postMovie($scope.movie.Title, $scope.Format, $scope.Year, $scope.user.uid)
                 .then(function(result) {
                     $uibModal.open({
                         animation: $scope.animationsEnabled,
@@ -177,4 +211,7 @@ angular.module('app.controllers', [])
         $ctrl3.ok = function() {
             $uibModalInstance.close();
         };
+    })
+    .controller('watchlistController', function($scope, movieService) {
+
     })
