@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-md-8" id="movieLookup">
                             <input type="text" id="inputMovie" ng-model="movieTitle" placeholder="Movie Title"
-                                   uib-typeahead="movie for movie in getMovies($viewValue)" class="form-control">
+                                   uib-typeahead="movie.original_title for movie in getMovies($viewValue)" typeahead-on-select="movieSelected($item)" class="form-control">
                         </div>
                     </div>
                     <br/><br/>

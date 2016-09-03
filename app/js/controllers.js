@@ -35,17 +35,17 @@ angular.module('app.controllers', [])
         }
         $scope.showMovieDetails = function(movie) {
             movieService.getMovieInfo(movie.Title).then(function(response) {
-                if (response.data.Title) {
+                if (response) {
                     $uibModal.open({
                         animation: $scope.animationsEnabled,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'movieDetailsModal.html',
+                        templateUrl: 'movieDetailsModal',
                         controller: 'movieModalController',
                         controllerAs: '$ctrl',
                         resolve: {
                             movie: function() {
-                                return response.data;
+                                return response;
                             }
                         }
                     });
@@ -113,14 +113,19 @@ angular.module('app.controllers', [])
         };
     })
     .controller('addController', function($scope, $uibModal, $http) {
+        $scope.selectedMovie = null;
         $scope.getMovies = function(val) {
             return $http.get('https://api.themoviedb.org/3/search/movie?api_key=2298bae6fa115550839717f1fb686552&query=' +val, {
             }).then(function(response){
                 return response.data.results.map(function(item){
-                    return item.original_title;
+                    return item;
                 });
             });
         };
+        $scope.movieSelected = function(movieSelected){
+            $scope.selectedMovie = movieSelected;
+        };
+
         $scope.addMovie = function() {
             $uibModal.open({
                 animation: $scope.animationsEnabled,
@@ -132,10 +137,12 @@ angular.module('app.controllers', [])
                 resolve: {
                     movie: function() {
                         var movieReturned = {
-                            Title: $scope.movieTitle,
-                            Year: $scope.movieYear,
+                            Year:$scope.movieYear,
                             Format: $scope.movieFormat
                         };
+                        movieReturned.Title = $scope.selectedMovie ? $scope.selectedMovie.original_title : $scope.movieTitle;
+                        movieReturned.Id = $scope.selectedMovie.id || 0;
+                        movieReturned.PosterPath = $scope.selectedMovie.id > 0 ? 'http://image.tmdb.org/t/p/w342' + $scope.selectedMovie.poster_path : '';
                         return movieReturned;
                     }
                 }

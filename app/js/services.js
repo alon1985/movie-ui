@@ -4,7 +4,7 @@ angular.module('app.services', [])
         if (!CacheFactory.get('movieCache')) {
             movieCache = CacheFactory('movieCache');
         }
-        var getMovies = function(style) {
+        var getMyMovies = function(style) {
             return $http.get('https://alon-film-id.appspot.com/movies/search' + style).then(function(response) {
                 if (response.status === 200) {
                     movieCache.put('movieList', response.data);
@@ -19,10 +19,17 @@ angular.module('app.services', [])
                 return movieCache.get(title);
             }
             else {
-                var url = 'http://www.omdbapi.com/?t=' + title + '&y=&plot=short&r=json';
-                return $http.get(url).success(function(response) {
-                    movieCache.put(response);
-                    return response;
+                var url = 'https://api.themoviedb.org/3/search/movie?api_key=2298bae6fa115550839717f1fb686552&query=' + title;
+                return $http.get(url).then(function(response) {
+                    var movieResult = response.data.results[0];
+                    movieCache.put(movieResult.original_title, movieResult);
+                    return {
+                        Title: movieResult.original_title,
+                        Year: movieResult.release_date.split('-')[0],
+                        Poster: 'http://image.tmdb.org/t/p/w342' + movieResult.poster_path,
+                        Description: movieResult.overview,
+                        Id: movieResult.id
+                    };
                 });
             }
         };
@@ -64,7 +71,7 @@ angular.module('app.services', [])
         };
 
         return {
-            getMovies: getMovies,
+            getMovies: getMyMovies,
             getMovieInfo: getMovieInfo,
             postMovie: postMovie,
             getMovieStats: getMovieStats,

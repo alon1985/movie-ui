@@ -31,3 +31,7 @@ tbody {
     -o-transform: scale(1);
     transform: scale(1);
 }
+
+#movieDetailsModal .modal-content {
+    overflow-y: auto;
+}

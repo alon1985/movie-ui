@@ -89,15 +89,15 @@
     </div>
 </div>
 <div ng-controller="listController as $ctrl">
-    <script type="text/ng-template" id="movieDetailsModal.html">
+    <script type="text/ng-template" id="movieDetailsModal">
         <div class="modal-header">
-            <h3 class="modal-title" id="modal-title">{{$ctrl.movie.Title}} - {{$ctrl.movie.Year}}</h3>
+            <h3 class="modal-title" id="modal-title">{{$ctrl.movie.Title}}</h3>
         </div>
         <div class="modal-body" id="modal-body">
             <div class="row">
                 <div class="col-md-12">
                     <div class="thumbnail">
-                        <img src={{$ctrl.movie.Poster}}>
+                        <img src={{$ctrl.movie.Poster}}/>
                         <div class="caption">
                             <div class="list-group">
                                 <div class="list-group-item">
@@ -106,8 +106,8 @@
                                     </div>
                                     <div class="row-content">
                                         <div class="action-secondary"></div>
-                                        <h3 class="list-group-item-heading">{{$ctrl.movie.Director}}</h3>
-                                        <p class="list-group-item-text">Director</p>
+                                        <h3 class="list-group-item-heading">{{$ctrl.movie.Year}}</h3>
+                                        <p class="list-group-item-text">Release Year</p>
                                     </div>
                                 </div>
                             </div>
@@ -130,6 +130,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="thumbnail">
+                        <img src={{$ctrl2.movie.PosterPath}}>
                         <div class="caption">
                             <div class="list-group">
                                 <div class="list-group-item">
@@ -139,7 +140,6 @@
                                     <div class="row-content">
                                         <div class="action-secondary"></div>
                                         <h3 class="list-group-item-heading">{{$ctrl2.movie.Title}}</h3>
-                                        <p class="list-group-item-text">Movie Title</p>
                                     </div>
                                 </div>
                                 <div class="list-group-item">
@@ -149,7 +149,6 @@
                                     <div class="row-content">
                                         <div class="action-secondary"></div>
                                         <h3 class="list-group-item-heading">{{$ctrl2.movie.Format}}</h3>
-                                        <p class="list-group-item-text">Movie Format</p>
                                     </div>
                                 </div>
                                 <div class="list-group-item">
