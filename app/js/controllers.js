@@ -12,6 +12,7 @@ angular.module('app.controllers', [])
         };
         var handleSignedInUser = function(user) {
             userSelectionService.setUser(user);
+            $scope.user = user;
             if (user.photoURL) {
                 document.getElementById('user-account').src = user.photoURL;
             }
@@ -19,8 +20,17 @@ angular.module('app.controllers', [])
         };
         var handleSignedOutUser = function(user) {
             userSelectionService.setUser(null);
+            $scope.user = null;
             document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
         };
+
+        $scope.userSignedIn = function(){
+            return $scope.user!=null;
+        };
+        $scope.userSignedOut = function(){
+            return $scope.user==null;
+        };
+
         $scope.animationsEnabled = true;
         $scope.download = function() {
             var user = userSelectionService.getUser();
