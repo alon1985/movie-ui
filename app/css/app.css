@@ -1,0 +1,33 @@
+body {
+    padding-top: 70px;
+}
+
+tr {
+    width: 100%;
+    display: inline-table;
+    table-layout: fixed;
+}
+
+table {
+    height: 500px;
+    display: -moz-groupbox;
+}
+
+tbody {
+    overflow-y: scroll;
+    height: 500px;
+}
+.panel {
+    overflow: hidden;
+}
+.panel-body { /* parent container of the menu */
+    overflow:auto;
+}
+
+#movieLookup ul {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+}

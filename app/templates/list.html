@@ -1,0 +1,43 @@
+<form>
+    <div>
+        <div class="panel panel-primary" ng-if="userSignedIn()">
+            <!-- Default panel contents -->
+            <div class="panel-heading" style="background-color: #009688">
+                <div class="row">
+                    <div class="col-sm-4">Movie</div>
+                    <div class="col-sm-4">Year(s) Seen</div>
+                    <div class="col-sm-4">Format(s) Seen</div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="form-group has-success">
+                    <div class="togglebutton">
+                        <label>
+                            <input type="checkbox" ng-model="advanced"> Advanced Search
+                        </label>
+                    </div>
+                    <input type="text" class="form-control" ng-model="search.$" placeholder="Search List" ng-hide="advanced">
+                    <input type="text" class="form-control" ng-model="search.Title" placeholder="Search Movie Title" ng-show="advanced">
+                    <input type="text" class="form-control" ng-model="search.Year" placeholder="Search Years" ng-show="advanced">
+                    <input type="text" class="form-control" ng-model="search.Format" placeholder="Search Formats" ng-show="advanced">
+                </div>
+            </div>
+            <table class="table table-responsive table-striped">
+                <tbody>
+                <tr ng-repeat="movie in movies | filter:search:false">
+                    <td>{{ movie.Title }}</td>
+                    <td>{{ movie.Year }}</td>
+                    <td>{{ movie.Format }}</td>
+                    <td><button type="button" ng-click="showMovieDetails(movie)" class="btn btn-default"><i class="material-icons">info_outline</i></button></td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <div class="jumbotron" ng-if="userSignedOut()">
+        <h1 style="text-align: center">Your Movies</h1><br/>
+        <p style="text-align: center">Please Sign in to access your list or add new movies</p>
+    </div>
+
+</form>

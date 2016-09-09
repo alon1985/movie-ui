@@ -1,0 +1,32 @@
+<div ng-if="userSignedIn()">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Total Movies Seen</h3>
+        </div>
+        <div class="panel-body">
+            {{totalMovies}}
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Movies Per Year</h3>
+        </div>
+        <div class="panel-body">
+            <canvas id="moviesPerYearBar" class="chart chart-line" chart-data="moviesPerYear" chart-labels="labels"></canvas>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Movies Per Year By Format</h3>
+        </div>
+        <div class="panel-body">
+            <canvas id="moviesPerYearByFormatBar" chart-click="chartClick"  class="chart chart-bar" chart-data="moviesPerYearByFormat" chart-labels="labels"  chart-series="series" chart-options="options"></canvas>
+        </div>
+    </div>
+</div>
+    <div class="jumbotron" ng-if="userSignedOut()">
+        <h1 style="text-align: center">Your Movies</h1><br/>
+        <p style="text-align: center">Please Sign in to view your movie statistics</p>
+    </div>

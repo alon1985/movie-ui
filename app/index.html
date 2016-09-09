@@ -1,150 +1,198 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Alon's Movies</title>
-    <link rel="icon" href="https://image3.putlocker.is/images/favicon.png" type="image/x-icon"/>
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="angular-responsive-tables.min.css">
-    <style>
-        body {
-            padding-top: 50px;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Movies</title>
+    <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCGvgDMg6kX4YVwwpU6zTi21x9f2Wtdbtc",
+            authDomain: "alon-film-ui.firebaseapp.com",
+            databaseURL: "https://alon-film-ui.firebaseio.com",
+            storageBucket: "alon-film-ui.appspot.com"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 
-    <!-- JS -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="css/boostrap-material-design.css">
+    <link rel="stylesheet" type="text/css" href="css/ripples.min.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
-    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="controller.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.bundle.min.js"></script>
+    <script src="js/angular-cache-min.js"></script>
+    <script src="js/angular-chart-min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/directives.js"></script>
 
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript">
+        angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '" />'));
+    </script>
 </head>
-<body>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<div class="container" ng-app="movieApp" ng-controller="mainController">
-    <a href style="color:#337ab7;font-size: medium;" ng-click="showAddMovie = !showAddMovie">Add Movie</a><br/><br/>
-    <form ng-submit="submit()" ng-controller="mainController" ng-show="showAddMovie">
-        <div class="table-responsive">
-        <table class="table table-bordered table-striped table-condensed">
-
-            <thead>
-            <tr>
-                <th class="col-xs-4" style="color:#337ab7;">Movie Title</th>
-                <th class="col-xs-1" style="color:#337ab7;">Movie Format</th>
-                <th class="col-xs-1" style="color:#337ab7;">Year Seen</th>
-                <th class="col-xs-4" style="color:#337ab7;">Enter Password</th>
-                <th class="col-xs-2" style="color:#337ab7;">Add Movie</th>
-            </tr>
-            <tr>
-                <td>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="inputTitle"></i></div>
-                            <input type="text" class="form-control"
-                                   ng-model="addMovieTitle">
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <select ng-model="addMovieFormat" name="addMovieFormat">
-                                <option value="In Theaters">In Theaters</option>
-                                <option value="Video">Video</option>
-                            </select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <select ng-model="addMovieYear" ng-options="year for year in Range(2016, 2030)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="inputFormat"></i></div>
-                            <input type="password" class="form-control" ng-model="moviePassword">
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="inputFormat"></i></div>
-                            <button type="button" class="btn btn-default" ng-click="open()">Add Movie</button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </thead>
-        </table>
-            </div>
-    </form>
-    <script type="text/ng-template" id="confirmMovie.html">
-        <div class="modal-header">
-            <h3 class="modal-title">Confirm Movie Details</h3>
-        </div>
-        <div class="modal-body">
-            <ul>
-                <li>{{items.movieTitle}}</li>
-                <li>{{items.movieYear}}</li>
-                <li>{{items.movieFormat}}</li>
+<body ng-app="app" ng-controller="mainController">
+<div class="navbar navbar-fixed-top" style="background-color: #f8f8f8">
+    <div class="container-fluid">
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#/list">My List</a></li>
+                <li><a href="#/add">Add Movie</a></li>
+                <li><a href="#/stats">My Stats</a></li>
+                <li><a href="#/watchlist">My Watchlist</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" data-target="#" class="dropdown-toggle"
+                       data-toggle="dropdown">Export</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)" ng-click="download()">Export to CSV</a></li>
+                        <li><a href="javascript:void(0)">Sync to Cloud (Coming Soon)</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="javascript:void(0)" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><img
+                            src="https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png"
+                            id="user-account" class="profile-image img-circle" width="24" height="24"
+                            alt="Circular Image"/></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="widgetSignIn" ng-click="login()">Login</a></li>
+                        <li><a id="widgetSignOut" ng-click="logout()">Logout</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
-    <script type="text/ng-template" id="failedMovieModal.html">
-        <div class="modal-body" style="background-color: #f2dede; color: #a94442">Failed to Add Movie
-        <button type="button" class="close" ng-click="close()">
-            <span aria-hidden="true">×</span>
-        </button>
-            </div>
-    </script>
-    <script type="text/ng-template" id="successMovieModal.html">
-        <div class="modal-body" style="background-color: #dff0d8; color: #3c763d" >Movie Added
-        </div>
-        <button type="button" class="close" ng-click="closeAndReload()">
-            <span aria-hidden="true">×</span>
-        </button>
-    </script>
-
-    <form>
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon"><i class="fa fa-search"></i></div>
-
-                <input type="text" class="form-control" placeholder="Search Movie Title" ng-model="movieQuery">
-
-            </div>
-        </div>
-    </form>
-    <uib-accordion close-others="true">
-        <uib-accordion-group heading="{{movie.title}}" ng-repeat="movie in movies | filter: {title: movieQuery}">
-            <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                <tr>
-                    <th class="col-xs-1" style="color:#337ab7;">Year Seen</th>
-                    <th class="col-xs-1" style="color:#337ab7;">Movie Format</th>
-                </tr>
-                </thead>
-                <tr ng-repeat="view in movie.viewed">
-                    <td>{{view.year}}</td>
-                    <td>{{view.format}}</td>
-                </tr>
-            </table>
-        </uib-accordion-group>
-    </uib-accordion>
-
+    </div>
 </div>
-
-</body>
-</html>
+<div class="container">
+    <div ng-view>
+    </div>
+</div>
+<div ng-controller="listController as $ctrl">
+    <script type="text/ng-template" id="movieDetailsModal">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">{{$ctrl.movie.Title}}</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="thumbnail">
+                        <img src={{$ctrl.movie.Poster}}/>
+                        <div class="caption">
+                            <div class="list-group">
+                                <div class="list-group-item">
+                                    <div class="row-action-primary">
+                                        <i class="material-icons">movie_creation</i>
+                                    </div>
+                                    <div class="row-content">
+                                        <div class="action-secondary"></div>
+                                        <h3 class="list-group-item-heading">{{$ctrl.movie.Year}}</h3>
+                                        <p class="list-group-item-text">Release Year</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="$ctrl.ok()">Close</button>
+        </div>
+    </script>
+</div>
+<div ng-controller="addController as $ctrl2">
+    <script type="text/ng-template" id="confirmMovieModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Confirm Movie Details</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="thumbnail">
+                        <img src={{$ctrl2.movie.PosterPath}}>
+                        <div class="caption">
+                            <div class="list-group">
+                                <div class="list-group-item">
+                                    <div class="row-action-primary">
+                                        <i class="material-icons">movie_creation</i>
+                                    </div>
+                                    <div class="row-content">
+                                        <div class="action-secondary"></div>
+                                        <h3 class="list-group-item-heading">{{$ctrl2.movie.Title}}</h3>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="row-action-primary">
+                                        <i class="material-icons">movie_creation</i>
+                                    </div>
+                                    <div class="row-content">
+                                        <div class="action-secondary"></div>
+                                        <h3 class="list-group-item-heading">{{$ctrl2.movie.Format}}</h3>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="row-action-primary">
+                                        <i class="material-icons">movie_creation</i>
+                                    </div>
+                                    <div class="row-content">
+                                        <div class="action-secondary"></div>
+                                        <h3 class="list-group-item-heading">{{$ctrl2.movie.Year}}</h3>
+                                        <p class="list-group-item-text">Year Seen</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="$ctrl2.ok()">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="$ctrl2.cancel()">Cancel
+            </button>
+        </div>
+    </script>
+    <div ng-controller="addController as $ctrl3">
+        <script type="text/ng-template" id="postMovieModal.html">
+            <div class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Your Movie</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{$ctrl3.message}}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="$ctrl3.ok()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </body>
+            </html>
