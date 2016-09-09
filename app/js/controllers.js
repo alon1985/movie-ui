@@ -45,7 +45,9 @@ angular.module('app.controllers', [])
         $scope.user = userSelectionService.getUser();
 
             firebase.auth().onAuthStateChanged(function(user) {
-                user ? handleSignedInUser(user) : handleSignedOutUser();
+                if(user!=userSelectionService.getUser()) {
+                    user ? handleSignedInUser(user) : handleSignedOutUser();
+                }
             });
 
         $scope.userSignedIn = function(){
@@ -70,6 +72,9 @@ angular.module('app.controllers', [])
         };
 
         if ($scope.user && $scope.user.uid) {
+            if(movieService.getSearchTerm()!=''){
+                $scope.search.Year = movieService.getSearchTerm();
+            }
             movieService.getMovies("?style=list&uid=" + $scope.user.uid).then(function(movies) {
                 $scope.movies = movies;
             });
@@ -92,7 +97,6 @@ angular.module('app.controllers', [])
                         }
                     });
                 }
-                ;
             });
         };
 
@@ -107,11 +111,13 @@ angular.module('app.controllers', [])
             $uibModalInstance.close();
         };
     })
-    .controller('statsController', function($scope, movieService, userSelectionService, $route) {
+    .controller('statsController', function($scope, movieService, userSelectionService, $route, $window) {
         $scope.user = userSelectionService.getUser();
 
         firebase.auth().onAuthStateChanged(function(user) {
-            user ? handleSignedInUser(user) : handleSignedOutUser();
+            if(user!=userSelectionService.getUser()) {
+                user ? handleSignedInUser(user) : handleSignedOutUser();
+            }
         });
 
         $scope.userSignedIn = function(){
@@ -168,9 +174,9 @@ angular.module('app.controllers', [])
             });
         }
         $scope.chartClick = function(points, evt) {
-            console.log(points[0].value); // 0 -> Series A, 1 -> Series B
-            //points[0]._view.label
-            //points[0]._view.datasetLabel
+            var year = points[0]._model.label;
+            movieService.setSearchTerm(year);
+          //  $window.location.href = '#/list';
         };
     })
     .controller('addController', function($scope, $uibModal, $http, userSelectionService, $route) {
@@ -178,7 +184,9 @@ angular.module('app.controllers', [])
         $scope.user = userSelectionService.getUser();
 
         firebase.auth().onAuthStateChanged(function(user) {
-            user ? handleSignedInUser(user) : handleSignedOutUser();
+            if(user!=userSelectionService.getUser()) {
+                user ? handleSignedInUser(user) : handleSignedOutUser();
+            }
         });
 
         $scope.userSignedIn = function(){

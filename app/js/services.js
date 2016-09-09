@@ -1,9 +1,17 @@
 angular.module('app.services', [])
     .factory('movieService', function($http, CacheFactory) {
         var movieCache;
+        var searchTerm;
         if (!CacheFactory.get('movieCache')) {
             movieCache = CacheFactory('movieCache');
         }
+         var getSearchTerm = function() {
+             return searchTerm;
+         };
+         var setSearchTerm = function(searchInput){
+                searchTerm = searchInput;
+            };
+
         var getMyMovies = function(style) {
             return $http.get('https://alon-film-id.appspot.com/movies/search' + style).then(function(response) {
                 if (response.status === 200) {
@@ -76,7 +84,9 @@ angular.module('app.services', [])
             getMovieInfo: getMovieInfo,
             postMovie: postMovie,
             getMovieStats: getMovieStats,
-            exportMyMovies: exportMyMovies
+            exportMyMovies: exportMyMovies,
+            setSearchTerm: setSearchTerm,
+            getSearchTerm: getSearchTerm
         };
     })
     .factory('userSelectionService', function() {
