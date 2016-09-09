@@ -4,14 +4,24 @@ angular.module('app.controllers', [])
         firebase.auth().onAuthStateChanged(function(user) {
             user ? handleSignedInUser(user) : handleSignedOutUser();
         });
-        $scope.animationsEnabled = true;
         $scope.login = function() {
             window.open('/templates/authTemplate.html', 'Sign In', 'width=985,height=735');
         };
         $scope.logout = function() {
             firebase.auth().signOut();
         };
+        var handleSignedInUser = function(user) {
+            userSelectionService.setUser(user);
+            if (user.photoURL) {
+                document.getElementById('user-account').src = user.photoURL;
+            }
 
+        };
+        var handleSignedOutUser = function(user) {
+            userSelectionService.setUser(null);
+            document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
+        };
+        $scope.animationsEnabled = true;
         $scope.download = function() {
             var user = userSelectionService.getUser();
             if (user) {
@@ -27,28 +37,36 @@ angular.module('app.controllers', [])
             }
         };
 
-        var handleSignedInUser = function(user) {
-            userSelectionService.setUser(user);
-            if (user.photoURL) {
-                document.getElementById('user-account').src = user.photoURL;
-            }
 
-        };
-        var handleSignedOutUser = function(user) {
-            userSelectionService.setUser(null);
-            document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
-        };
     })
 
-    .controller('listController', function($scope, movieService, userSelectionService, $uibModal) {
+    .controller('listController', function($scope, movieService, userSelectionService, $uibModal, $route) {
         $scope.animationsEnabled = true;
         $scope.user = userSelectionService.getUser();
+
+            firebase.auth().onAuthStateChanged(function(user) {
+                user ? handleSignedInUser(user) : handleSignedOutUser();
+            });
 
         $scope.userSignedIn = function(){
             return $scope.user!=null;
         };
         $scope.userSignedOut = function(){
             return $scope.user==null;
+        };
+
+        var handleSignedInUser = function(user) {
+            userSelectionService.setUser(user);
+            if (user.photoURL) {
+                document.getElementById('user-account').src = user.photoURL;
+            }
+            $route.reload();
+
+        };
+        var handleSignedOutUser = function(user) {
+            userSelectionService.setUser(null);
+            document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
+            $route.reload();
         };
 
         if ($scope.user && $scope.user.uid) {
@@ -89,14 +107,32 @@ angular.module('app.controllers', [])
             $uibModalInstance.close();
         };
     })
-    .controller('statsController', function($scope, movieService, userSelectionService) {
+    .controller('statsController', function($scope, movieService, userSelectionService, $route) {
         $scope.user = userSelectionService.getUser();
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            user ? handleSignedInUser(user) : handleSignedOutUser();
+        });
 
         $scope.userSignedIn = function(){
             return $scope.user!=null;
         };
         $scope.userSignedOut = function(){
             return $scope.user==null;
+        };
+
+        var handleSignedInUser = function(user) {
+            userSelectionService.setUser(user);
+            if (user.photoURL) {
+                document.getElementById('user-account').src = user.photoURL;
+            }
+            $route.reload();
+
+        };
+        var handleSignedOutUser = function(user) {
+            userSelectionService.setUser(null);
+            document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
+            $route.reload();
         };
 
 
@@ -137,15 +173,33 @@ angular.module('app.controllers', [])
             //points[0]._view.datasetLabel
         };
     })
-    .controller('addController', function($scope, $uibModal, $http, userSelectionService) {
+    .controller('addController', function($scope, $uibModal, $http, userSelectionService, $route) {
         $scope.selectedMovie = null;
         $scope.user = userSelectionService.getUser();
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            user ? handleSignedInUser(user) : handleSignedOutUser();
+        });
 
         $scope.userSignedIn = function(){
             return $scope.user!=null;
         };
         $scope.userSignedOut = function(){
             return $scope.user==null;
+        };
+
+        var handleSignedInUser = function(user) {
+            userSelectionService.setUser(user);
+            if (user.photoURL) {
+                document.getElementById('user-account').src = user.photoURL;
+            }
+            $route.reload();
+
+        };
+        var handleSignedOutUser = function(user) {
+            userSelectionService.setUser(null);
+            document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
+            $route.reload();
         };
 
         $scope.getMovies = function(val) {
