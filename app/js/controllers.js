@@ -82,9 +82,6 @@ angular.module('app.controllers', [])
         };
 
         if ($scope.user && $scope.user.uid) {
-            if(movieService.getSearchTerm()!=''){
-                $scope.search.Year = movieService.getSearchTerm();
-            }
             movieService.getMovies("?style=list&uid=" + $scope.user.uid).then(function(movies) {
                 $scope.movies = movies;
             });

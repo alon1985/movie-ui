@@ -1,14 +1,15 @@
 <div id="loginModal" class="modal fade">
-        <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
         <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyCGvgDMg6kX4YVwwpU6zTi21x9f2Wtdbtc",
-                authDomain: "alon-film-ui.firebaseapp.com",
-                databaseURL: "https://alon-film-ui.firebaseio.com",
-                storageBucket: "alon-film-ui.appspot.com",
-            };
-            firebase.initializeApp(config);
+                // Initialize Firebase
+                var config = {
+                        apiKey: "AIzaSyA9jvIQmvYd97YcqnCr7QHwW1XkDcS6_to",
+                        authDomain: "film-42022.firebaseapp.com",
+                        databaseURL: "https://film-42022.firebaseio.com",
+                        storageBucket: "",
+                        messagingSenderId: "340384646177"
+                };
+                firebase.initializeApp(config);
         </script>
         <script src="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.js"></script>
         <link type="text/css" rel="stylesheet"
@@ -33,7 +34,6 @@
                     }
                 },
                 'signInOptions': [
-                    // TODO(developer): Remove the providers you don't need for your app.
                     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
                     firebase.auth.FacebookAuthProvider.PROVIDER_ID,
                     firebase.auth.EmailAuthProvider.PROVIDER_ID
