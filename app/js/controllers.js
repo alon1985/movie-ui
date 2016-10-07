@@ -188,6 +188,7 @@ angular.module('app.controllers', [])
     })
     .controller('addController', function($scope, $uibModal, $http, userSelectionService, $route) {
         $scope.selectedMovie = null;
+        $scope.userMovie = {};
         $scope.user = userSelectionService.getUser();
 
         firebase.auth().onAuthStateChanged(function(user) {
@@ -239,10 +240,10 @@ angular.module('app.controllers', [])
                 resolve: {
                     movie: function() {
                         var movieReturned = {
-                            Year: $scope.movieYear,
-                            Format: $scope.movieFormat
+                            Year: $scope.userMovie.movieYear,
+                            Format: $scope.userMovie.movieFormat
                         };
-                        movieReturned.Title = $scope.selectedMovie ? $scope.selectedMovie.original_title : $scope.movieTitle;
+                        movieReturned.Title = $scope.selectedMovie ? $scope.selectedMovie.original_title : $scope.userMovie.movieTitle;
                         movieReturned.Id = $scope.selectedMovie.id || 0;
                         movieReturned.PosterPath = $scope.selectedMovie.id > 0 ? 'http://image.tmdb.org/t/p/w342' + $scope.selectedMovie.poster_path : '';
                         return movieReturned;
@@ -256,7 +257,7 @@ angular.module('app.controllers', [])
         $ctrl2.movie = movie;
         $scope.user = userSelectionService.getUser();
         $ctrl2.ok = function() {
-            movieService.postMovie($scope.movie.Title, $scope.Format, $scope.Year, $scope.user.uid)
+            movieService.postMovie($scope.movie.Title, $scope.movie.Format, $scope.movie.Year, $scope.user.uid)
                 .then(function(result) {
                     $uibModal.open({
                         animation: $scope.animationsEnabled,

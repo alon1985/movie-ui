@@ -10,7 +10,7 @@
                         <div class="col-md-4"><label for="inputMovie" class="control-label">Movie Title</label>
                         </div>
                         <div class="col-md-8" id="movieLookup">
-                            <input type="text" id="inputMovie" ng-model="movieTitle" placeholder="Movie Title"
+                            <input type="text" id="inputMovie" ng-model="userMovie.movieTitle" placeholder="Movie Title"
                                    uib-typeahead="movie.original_title for movie in getMovies($viewValue)" typeahead-on-select="movieSelected($item)" class="form-control">
                         </div>
                     </div>
@@ -20,12 +20,12 @@
                         </div>
                         <div class="col-md-8">
                             <div class="radio radio-primary">
-                                <input type="radio" ng-model="movieFormat" ng-value="'In Theaters'"
+                                <input type="radio" ng-model="userMovie.movieFormat" ng-value="'In Theaters'"
                                        name="formatRadio" id="formatRadio1" value="'In Theaters'" checked="">
                                 In Theaters
                             </div>
                             <div class="radio radio-primary">
-                                <input type="radio" ng-model="movieFormat" ng-value="'Video'" name="formatRadio"
+                                <input type="radio" ng-model="userMovie.movieFormat" ng-value="'Video'" name="formatRadio"
                                        id="formatRadio2" value="'Video'">
                                 Video
                             </div>
@@ -36,7 +36,7 @@
                         <div class="col-md-4"><label for="inputYear" class="control-label">Year Seen</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="number" ng-model="movieYear" class="form-control"
+                            <input type="number" ng-model="userMovie.movieYear" class="form-control"
                                    id="inputYear" placeholder="Movie Year">
                         </div>
                     </div>
