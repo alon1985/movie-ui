@@ -239,14 +239,13 @@ angular.module('app.controllers', [])
                 controllerAs: '$ctrl2',
                 resolve: {
                     movie: function() {
-                        var movieReturned = {
+                        return {
                             Year: $scope.userMovie.movieYear,
-                            Format: $scope.userMovie.movieFormat
+                            Format: $scope.userMovie.movieFormat,
+                            Title: $scope.selectedMovie ? $scope.selectedMovie.original_title : $scope.userMovie.movieTitle,
+                            Id: $scope.selectedMovie.id || 0,
+                            PosterPath: $scope.selectedMovie.id > 0 ? 'http://image.tmdb.org/t/p/w342' + $scope.selectedMovie.poster_path : ''
                         };
-                        movieReturned.Title = $scope.selectedMovie ? $scope.selectedMovie.original_title : $scope.userMovie.movieTitle;
-                        movieReturned.Id = $scope.selectedMovie.id || 0;
-                        movieReturned.PosterPath = $scope.selectedMovie.id > 0 ? 'http://image.tmdb.org/t/p/w342' + $scope.selectedMovie.poster_path : '';
-                        return movieReturned;
                     }
                 }
             });
