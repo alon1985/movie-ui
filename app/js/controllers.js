@@ -251,7 +251,7 @@ angular.module('app.controllers', [])
             });
         };
     })
-    .controller('movieModalController2', function($scope, $uibModalInstance, $uibModal, movie, movieService) {
+    .controller('movieModalController2', function($scope, userSelectionService, $uibModalInstance, $uibModal, movie, movieService) {
         var $ctrl2 = this;
         $ctrl2.movie = movie;
         $scope.user = userSelectionService.getUser();
