@@ -255,6 +255,7 @@ angular.module('app.controllers', [])
         var $ctrl2 = this;
         $ctrl2.movie = movie;
         $scope.user = userSelectionService.getUser();
+        $scope.result = 0;
         $ctrl2.ok = function() {
             movieService.postMovie($ctrl2.movie.Title, $ctrl2.movie.Format, $ctrl2.movie.Year, $scope.user.uid)
                 .then(function(result) {
@@ -266,7 +267,11 @@ angular.module('app.controllers', [])
                         controller: 'movieModalController3',
                         controllerAs: '$ctrl3',
                         resolve: {
-                            message: (result === 0 || !result) ? 'Failed to Add Movie' : 'Movie Added'
+                            message: function() {
+                                return {
+                                    outcome: result === 0 || !result ? 'Failed to Add Movie' : 'Movie Added'
+                                }
+                            }
                         }
                     });
                 });
