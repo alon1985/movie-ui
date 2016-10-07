@@ -256,7 +256,7 @@ angular.module('app.controllers', [])
         $ctrl2.movie = movie;
         $scope.user = userSelectionService.getUser();
         $ctrl2.ok = function() {
-            movieService.postMovie($scope.movie.Title, $scope.movie.Format, $scope.movie.Year, $scope.user.uid)
+            movieService.postMovie($ctrl2.movie.Title, $ctrl2.movie.Format, $ctrl2.movie.Year, $scope.user.uid)
                 .then(function(result) {
                     $uibModal.open({
                         animation: $scope.animationsEnabled,
