@@ -13,7 +13,7 @@ angular.module('app.services', [])
             };
 
         var getMyMovies = function(style) {
-            return $http.get('https://alon-film-id.appspot.com/movies/search' + style).then(function(response) {
+            return $http.get('45.55.224.146/movies/search' + style).then(function(response) {
                 if (response.status === 200) {
                     movieCache.put('movieList', response.data);
                     return response.data;
@@ -23,7 +23,7 @@ angular.module('app.services', [])
             });
         };
         var exportMyMovies = function(uid){
-            return $http.get('https://alon-film-id.appspot.com/movies/export?uid=' + uid).then(function(response){
+            return $http.get('45.55.224.146/movies/export?uid=' + uid).then(function(response){
                 return response.data;
             });
         };
@@ -51,7 +51,7 @@ angular.module('app.services', [])
             if(userId){
                 query = '?uid=' + userId;
             }
-            return $http.get('http://alon-film-id.appspot.com/movies/stats' + query).then(function(response) {
+            return $http.get('45.55.224.146/movies/stats' + query).then(function(response) {
                 if (response.data) {
                     movieCache.put('movieStats', response.data);
                     return response.data;
@@ -71,7 +71,7 @@ angular.module('app.services', [])
                 'uid': uid
             };
             var parameter = JSON.stringify(data);
-            return $http.post('https://alon-film-id.appspot.com/movies/add', parameter, {headers: {'Content-Type': 'application/json'}})
+            return $http.post('45.55.224.146/movies/add', parameter, {headers: {'Content-Type': 'application/json'}})
                 .then(function successCallback() {
                     return 1;
                 }, function errorCallback() {
