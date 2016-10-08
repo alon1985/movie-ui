@@ -281,11 +281,12 @@ angular.module('app.controllers', [])
             $uibModalInstance.close();
         };
     })
-    .controller('movieModalController3', function($scope, $uibModalInstance) {
+    .controller('movieModalController3', function($scope, $uibModalInstance, $window) {
         var $ctrl3 = this;
         $ctrl3.message = $scope.$resolve.message.outcome;
         $ctrl3.ok = function() {
             $uibModalInstance.close();
+            $window.location.href = '#/list';
         };
     })
     .controller('watchlistController', function($scope, movieService) {
