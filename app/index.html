@@ -125,6 +125,29 @@
         </div>
     </script>
 </div>
+<div ng-controller="addController as $ctrl3">
+    <script type="text/ng-template" id="postMovieModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Your Movie</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="row">
+                <div class="list-group-item">
+                    <div class="row-action-primary">
+                        <i class="material-icons">movie_creation</i>
+                    </div>
+                    <div class="row-content">
+                        <div class="action-secondary"></div>
+                        <h3 class="list-group-item-heading">{{$ctrl3.message}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="$ctrl3.ok()">Close</button>
+        </div>
+    </script>
+</div>
 <div ng-controller="addController as $ctrl2">
     <script type="text/ng-template" id="confirmMovieModal.html">
         <div class="modal-header">
@@ -178,28 +201,7 @@
             </button>
         </div>
     </script>
-    <div ng-controller="addController as $ctrl3">
-        <script type="text/ng-template" id="postMovieModal.html">
-            <div class="modal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">Your Movie</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>{{$ctrl3.message.outcome}}</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="$ctrl3.ok()">
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </script>
-    </div>
 </div>
+
 </body>
 </html>

@@ -257,6 +257,7 @@ angular.module('app.controllers', [])
         $scope.user = userSelectionService.getUser();
         $scope.result = 0;
         $ctrl2.ok = function() {
+            $uibModalInstance.close();
             movieService.postMovie($ctrl2.movie.Title, $ctrl2.movie.Format, $ctrl2.movie.Year, $scope.user.uid)
                 .then(function(result) {
                     $uibModal.open({
@@ -282,6 +283,7 @@ angular.module('app.controllers', [])
     })
     .controller('movieModalController3', function($scope, $uibModalInstance) {
         var $ctrl3 = this;
+        $ctrl3.message = $scope.$resolve.message.outcome;
         $ctrl3.ok = function() {
             $uibModalInstance.close();
         };
