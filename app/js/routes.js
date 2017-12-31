@@ -16,6 +16,10 @@ angular.module('app.routes', [])
                 templateUrl: 'templates/home.html',
                 controller: 'mainController'
             })
+            .when('/about', {
+              templateUrl: 'templates/about.html',
+              controller: 'aboutController'
+            })
             .when('/list/', {
                 templateUrl: 'templates/list.html',
                 controller: 'listController',

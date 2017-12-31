@@ -49,7 +49,41 @@ angular.module('app.controllers', [])
 
 
     })
+    .controller('aboutController', function($scope, $route, userSelectionService) {
+      $scope.user = userSelectionService.getUser();
 
+      firebase.auth().onAuthStateChanged(function(user) {
+          if(user!=userSelectionService.getUser()) {
+              user ? handleSignedInUser(user) : handleSignedOutUser();
+          }
+      });
+
+      $scope.userSignedIn = function(){
+          return $scope.user!=null;
+      };
+      $scope.userSignedOut = function(){
+          return $scope.user==null;
+      };
+
+      var handleSignedInUser = function(user) {
+          userSelectionService.setUser(user);
+          if (user.photoURL) {
+              document.getElementById('user-account').src = user.photoURL;
+          }
+          $route.reload();
+
+      };
+      var handleSignedOutUser = function(user) {
+          userSelectionService.setUser(null);
+          document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
+          $route.reload();
+      };
+      $scope.IsVisible = false;
+            $scope.ShowHide = function () {
+                //If DIV is visible it will be hidden and vice versa.
+                $scope.IsVisible = $scope.IsVisible ? false : true;
+            }
+    })
     .controller('listController', function($scope, movieService, userSelectionService, $uibModal, $route) {
         $scope.animationsEnabled = true;
         $scope.user = userSelectionService.getUser();
