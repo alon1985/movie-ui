@@ -13,7 +13,7 @@ angular.module('app.services', [])
             };
 
         var getMyMovies = function(style) {
-            return $http.get('http://localhost:8080/movies/search' + style).then(function(response) {
+            return $http.get('http://cinemafile.api.jamotro.com/movies/search' + style).then(function(response) {
                 if (response.status === 200) {
                     movieCache.put('movieList', response.data);
                     return response.data;
