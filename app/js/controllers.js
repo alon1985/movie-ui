@@ -1,16 +1,16 @@
 angular.module('app.controllers', [])
 
-    .controller('mainController', function($scope, userSelectionService, movieService) {
-        firebase.auth().onAuthStateChanged(function(user) {
+    .controller('mainController', function ($scope, userSelectionService, movieService) {
+        firebase.auth().onAuthStateChanged(function (user) {
             user ? handleSignedInUser(user) : handleSignedOutUser();
         });
-        $scope.login = function() {
+        $scope.login = function () {
             window.open('/templates/authTemplate.html', 'Sign In', 'width=985,height=735');
         };
-        $scope.logout = function() {
+        $scope.logout = function () {
             firebase.auth().signOut();
         };
-        var handleSignedInUser = function(user) {
+        var handleSignedInUser = function (user) {
             userSelectionService.setUser(user);
             $scope.user = user;
             if (user.photoURL) {
@@ -18,24 +18,24 @@ angular.module('app.controllers', [])
             }
 
         };
-        var handleSignedOutUser = function(user) {
+        var handleSignedOutUser = function (user) {
             userSelectionService.setUser(null);
             $scope.user = null;
             document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
         };
 
-        $scope.userSignedIn = function(){
-            return $scope.user!=null;
+        $scope.userSignedIn = function () {
+            return $scope.user != null;
         };
-        $scope.userSignedOut = function(){
-            return $scope.user==null;
+        $scope.userSignedOut = function () {
+            return $scope.user == null;
         };
 
         $scope.animationsEnabled = true;
-        $scope.download = function() {
+        $scope.download = function () {
             var user = userSelectionService.getUser();
             if (user) {
-                movieService.exportMyMovies(user.uid).then(function(result) {
+                movieService.exportMyMovies(user.uid).then(function (result) {
                     var anchor = angular.element('<a/>');
                     anchor.attr({
                         href: 'data:attachment/csv;charset=utf-8,' + encodeURI(result),
@@ -49,59 +49,23 @@ angular.module('app.controllers', [])
 
 
     })
-    .controller('aboutController', function($scope, $route, userSelectionService) {
-      $scope.user = userSelectionService.getUser();
-
-      firebase.auth().onAuthStateChanged(function(user) {
-          if(user!=userSelectionService.getUser()) {
-              user ? handleSignedInUser(user) : handleSignedOutUser();
-          }
-      });
-
-      $scope.userSignedIn = function(){
-          return $scope.user!=null;
-      };
-      $scope.userSignedOut = function(){
-          return $scope.user==null;
-      };
-
-      var handleSignedInUser = function(user) {
-          userSelectionService.setUser(user);
-          if (user.photoURL) {
-              document.getElementById('user-account').src = user.photoURL;
-          }
-          $route.reload();
-
-      };
-      var handleSignedOutUser = function(user) {
-          userSelectionService.setUser(null);
-          document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
-          $route.reload();
-      };
-      $scope.IsVisible = false;
-            $scope.ShowHide = function () {
-                //If DIV is visible it will be hidden and vice versa.
-                $scope.IsVisible = $scope.IsVisible ? false : true;
-      };
-    })
-    .controller('listController', function($scope, movieService, userSelectionService, $uibModal, $route) {
-        $scope.animationsEnabled = true;
+    .controller('aboutController', function ($scope, $route, userSelectionService) {
         $scope.user = userSelectionService.getUser();
 
-            firebase.auth().onAuthStateChanged(function(user) {
-                if(user!=userSelectionService.getUser()) {
-                    user ? handleSignedInUser(user) : handleSignedOutUser();
-                }
-            });
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user != userSelectionService.getUser()) {
+                user ? handleSignedInUser(user) : handleSignedOutUser();
+            }
+        });
 
-        $scope.userSignedIn = function(){
-            return $scope.user!=null;
+        $scope.userSignedIn = function () {
+            return $scope.user != null;
         };
-        $scope.userSignedOut = function(){
-            return $scope.user==null;
+        $scope.userSignedOut = function () {
+            return $scope.user == null;
         };
 
-        var handleSignedInUser = function(user) {
+        var handleSignedInUser = function (user) {
             userSelectionService.setUser(user);
             if (user.photoURL) {
                 document.getElementById('user-account').src = user.photoURL;
@@ -109,33 +73,74 @@ angular.module('app.controllers', [])
             $route.reload();
 
         };
-        var handleSignedOutUser = function(user) {
+        var handleSignedOutUser = function (user) {
+            userSelectionService.setUser(null);
+            document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
+            $route.reload();
+        };
+        $scope.IsVisible = false;
+        $scope.ShowHide = function () {
+            //If DIV is visible it will be hidden and vice versa.
+            $scope.IsVisible = $scope.IsVisible ? false : true;
+        };
+    })
+    .controller('listController', function ($scope, movieService, userSelectionService, $uibModal, $log, $route) {
+        $scope.animationsEnabled = true;
+        $scope.$log = $log;
+        firebase.auth().onAuthStateChanged(function (user) {
+            $scope.user = user;
+            userSelectionService.setUser(user);
+            if (user != userSelectionService.getUser()) {
+                user ? handleSignedInUser(user) : handleSignedOutUser();
+            }
+        });
+        $scope.userSignedIn = function () {
+            return $scope.user != null;
+        };
+        $scope.userSignedOut = function () {
+            return $scope.user == null;
+        };
+
+        var handleSignedInUser = function (user) {
+            if (user.photoURL) {
+                document.getElementById('user-account').src = user.photoURL;
+            }
+            $route.reload();
+
+        };
+        var handleSignedOutUser = function (user) {
             userSelectionService.setUser(null);
             document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
             $route.reload();
         };
 
         if ($scope.user && $scope.user.uid) {
-            movieService.getMovies("?uid=" + $scope.user.uid).then(function(movies) {
+            $log.log('user is valid');
+            movieService.getMovies("?uid=" + $scope.user.uid).then(function (movies) {
                 var newMovies = [];
-                _.forEach(movies, function(movie) {
+                _.forEach(movies, function (movie) {
                     var newMovie = {title: movie.title};
-                    yearSeen = _.flatMap(movie.seen, function (viewing){
+                    yearSeen = _.flatMap(movie.seen, function (viewing) {
                         return viewing.seen
                     });
-                    formatSeen = _.flatMap(movie.seen, function (viewing){
+                    formatSeen = _.flatMap(movie.seen, function (viewing) {
                         return viewing.format
                     });
                     newMovie.year = _.join(yearSeen, ', ');
                     newMovie.format = _.join(formatSeen, ', ');
                     newMovies.push(newMovie);
                 });
-                $scope.movies = newMovies;
+                return newMovies;
+            }).then(function (finalMovies) {
+                $scope.movies = finalMovies;
             });
 
+        } else {
+            $log.log('user is invalid');
+            $log.log($scope.user);
         }
-        $scope.showMovieDetails = function(movie) {
-            movieService.getMovieInfo(movie.title).then(function(response) {
+        $scope.showMovieDetails = function (movie) {
+            movieService.getMovieInfo(movie.title).then(function (response) {
                 if (response) {
                     $uibModal.open({
                         animation: $scope.animationsEnabled,
@@ -145,7 +150,7 @@ angular.module('app.controllers', [])
                         controller: 'movieModalController',
                         controllerAs: '$ctrl',
                         resolve: {
-                            movie: function() {
+                            movie: function () {
                                 return response;
                             }
                         }
@@ -154,34 +159,34 @@ angular.module('app.controllers', [])
             });
         };
 
-        $scope.toggleAnimation = function() {
+        $scope.toggleAnimation = function () {
             $scope.animationsEnabled = !$scope.animationsEnabled;
         };
     })
-    .controller('movieModalController', function($uibModalInstance, movie) {
+    .controller('movieModalController', function ($uibModalInstance, movie) {
         var $ctrl = this;
         $ctrl.movie = movie;
-        $ctrl.ok = function() {
+        $ctrl.ok = function () {
             $uibModalInstance.close();
         };
     })
-    .controller('statsController', function($scope, movieService, userSelectionService, $route, $window) {
+    .controller('statsController', function ($scope, movieService, userSelectionService, $route, $window) {
         $scope.user = userSelectionService.getUser();
 
-        firebase.auth().onAuthStateChanged(function(user) {
-            if(user!=userSelectionService.getUser()) {
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user != userSelectionService.getUser()) {
                 user ? handleSignedInUser(user) : handleSignedOutUser();
             }
         });
 
-        $scope.userSignedIn = function(){
-            return $scope.user!=null;
+        $scope.userSignedIn = function () {
+            return $scope.user != null;
         };
-        $scope.userSignedOut = function(){
-            return $scope.user==null;
+        $scope.userSignedOut = function () {
+            return $scope.user == null;
         };
 
-        var handleSignedInUser = function(user) {
+        var handleSignedInUser = function (user) {
             userSelectionService.setUser(user);
             if (user.photoURL) {
                 document.getElementById('user-account').src = user.photoURL;
@@ -189,7 +194,7 @@ angular.module('app.controllers', [])
             $route.reload();
 
         };
-        var handleSignedOutUser = function(user) {
+        var handleSignedOutUser = function (user) {
             userSelectionService.setUser(null);
             document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
             $route.reload();
@@ -198,13 +203,13 @@ angular.module('app.controllers', [])
 
         if ($scope.user && $scope.user.uid) {
             $scope.series = ['In Theaters', 'Video'];
-            movieService.getMovieStats($scope.user.uid).then(function(response) {
+            movieService.getMovieStats($scope.user.uid).then(function (response) {
                 $scope.options = {legend: {display: true}, showTooltips: false};
                 $scope.totalMovies = response.totalMovies;
 
                 var labels = [];
                 var moviesPerYear = [];
-                response.moviesPerYear.forEach(function(mPY) {
+                response.moviesPerYear.forEach(function (mPY) {
                     labels.push(mPY.year);
                     moviesPerYear.push(mPY.total);
                 });
@@ -213,7 +218,7 @@ angular.module('app.controllers', [])
 
                 var moviesPerYearTheaters = [];
                 var moviesPerYearVideo = [];
-                response.movieFormatsPerYear.forEach(function(mFPY) {
+                response.movieFormatsPerYear.forEach(function (mFPY) {
                     var formatTotals = mFPY.formatTotals;
                     if (formatTotals[0].format === 'In Theaters') {
                         moviesPerYearTheaters.push(formatTotals[0].total);
@@ -227,31 +232,31 @@ angular.module('app.controllers', [])
                 $scope.moviesPerYearByFormat = moviesPerYearByFormat;
             });
         }
-        $scope.chartClick = function(points, evt) {
+        $scope.chartClick = function (points, evt) {
             var year = points[0]._model.label;
             movieService.setSearchTerm(year);
-          //  $window.location.href = '#/list';
+            //  $window.location.href = '#/list';
         };
     })
-    .controller('addController', function($scope, $uibModal, $http, userSelectionService, $route) {
+    .controller('addController', function ($scope, $uibModal, $http, userSelectionService, $route) {
         $scope.selectedMovie = null;
         $scope.userMovie = {};
         $scope.user = userSelectionService.getUser();
 
-        firebase.auth().onAuthStateChanged(function(user) {
-            if(user!=userSelectionService.getUser()) {
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user != userSelectionService.getUser()) {
                 user ? handleSignedInUser(user) : handleSignedOutUser();
             }
         });
 
-        $scope.userSignedIn = function(){
-            return $scope.user!=null;
+        $scope.userSignedIn = function () {
+            return $scope.user != null;
         };
-        $scope.userSignedOut = function(){
-            return $scope.user==null;
+        $scope.userSignedOut = function () {
+            return $scope.user == null;
         };
 
-        var handleSignedInUser = function(user) {
+        var handleSignedInUser = function (user) {
             userSelectionService.setUser(user);
             if (user.photoURL) {
                 document.getElementById('user-account').src = user.photoURL;
@@ -259,24 +264,24 @@ angular.module('app.controllers', [])
             $route.reload();
 
         };
-        var handleSignedOutUser = function(user) {
+        var handleSignedOutUser = function (user) {
             userSelectionService.setUser(null);
             document.getElementById('user-account').src = 'https://www.materialui.co/materialIcons/action/account_circle_grey_96x96.png';
             $route.reload();
         };
 
-        $scope.getMovies = function(val) {
-            return $http.get('https://api.themoviedb.org/3/search/movie?api_key=2298bae6fa115550839717f1fb686552&query=' + val, {}).then(function(response) {
-                return response.data.results.map(function(item) {
+        $scope.getMovies = function (val) {
+            return $http.get('https://api.themoviedb.org/3/search/movie?api_key=2298bae6fa115550839717f1fb686552&query=' + val, {}).then(function (response) {
+                return response.data.results.map(function (item) {
                     return item;
                 });
             });
         };
-        $scope.movieSelected = function(movieSelected) {
+        $scope.movieSelected = function (movieSelected) {
             $scope.selectedMovie = movieSelected;
         };
 
-        $scope.addMovie = function() {
+        $scope.addMovie = function () {
             $uibModal.open({
                 animation: $scope.animationsEnabled,
                 ariaLabelledBy: 'modal-title',
@@ -285,7 +290,7 @@ angular.module('app.controllers', [])
                 controller: 'movieModalController2',
                 controllerAs: '$ctrl2',
                 resolve: {
-                    movie: function() {
+                    movie: function () {
                         return {
                             Year: $scope.userMovie.movieYear,
                             Format: $scope.userMovie.movieFormat,
@@ -298,15 +303,15 @@ angular.module('app.controllers', [])
             });
         };
     })
-    .controller('movieModalController2', function($scope, userSelectionService, $uibModalInstance, $uibModal, movie, movieService) {
+    .controller('movieModalController2', function ($scope, userSelectionService, $uibModalInstance, $uibModal, movie, movieService) {
         var $ctrl2 = this;
         $ctrl2.movie = movie;
         $scope.user = userSelectionService.getUser();
         $scope.result = 0;
-        $ctrl2.ok = function() {
+        $ctrl2.ok = function () {
             $uibModalInstance.close();
             movieService.postMovie($ctrl2.movie.Title, $ctrl2.movie.Format, $ctrl2.movie.Year, $scope.user.uid)
-                .then(function(result) {
+                .then(function (result) {
                     $uibModal.open({
                         animation: $scope.animationsEnabled,
                         ariaLabelledBy: 'modal-title',
@@ -315,7 +320,7 @@ angular.module('app.controllers', [])
                         controller: 'movieModalController3',
                         controllerAs: '$ctrl3',
                         resolve: {
-                            message: function() {
+                            message: function () {
                                 return {
                                     outcome: result === 0 || !result ? 'Failed to Add Movie' : 'Movie Added'
                                 }
@@ -324,18 +329,18 @@ angular.module('app.controllers', [])
                     });
                 });
         };
-        $ctrl2.cancel = function() {
+        $ctrl2.cancel = function () {
             $uibModalInstance.close();
         };
     })
-    .controller('movieModalController3', function($scope, $uibModalInstance, $window) {
+    .controller('movieModalController3', function ($scope, $uibModalInstance, $window) {
         var $ctrl3 = this;
         $ctrl3.message = $scope.$resolve.message.outcome;
-        $ctrl3.ok = function() {
+        $ctrl3.ok = function () {
             $uibModalInstance.close();
             $window.location.href = '#/list';
         };
     })
-    .controller('watchlistController', function($scope, movieService) {
+    .controller('watchlistController', function ($scope, movieService) {
 
     });
