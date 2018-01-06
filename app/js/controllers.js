@@ -82,7 +82,7 @@ angular.module('app.controllers', [])
             $scope.ShowHide = function () {
                 //If DIV is visible it will be hidden and vice versa.
                 $scope.IsVisible = $scope.IsVisible ? false : true;
-            }
+      };
     })
     .controller('listController', function($scope, movieService, userSelectionService, $uibModal, $route) {
         $scope.animationsEnabled = true;
@@ -116,13 +116,26 @@ angular.module('app.controllers', [])
         };
 
         if ($scope.user && $scope.user.uid) {
-            movieService.getMovies("?style=list&uid=" + $scope.user.uid).then(function(movies) {
-                $scope.movies = movies;
+            movieService.getMovies("?uid=" + $scope.user.uid).then(function(movies) {
+                var newMovies = [];
+                _.forEach(movies, function(movie) {
+                    var newMovie = {title: movie.title};
+                    yearSeen = _.flatMap(movie.seen, function (viewing){
+                        return viewing.seen
+                    });
+                    formatSeen = _.flatMap(movie.seen, function (viewing){
+                        return viewing.format
+                    });
+                    newMovie.year = _.join(yearSeen, ',');
+                    newMovie.format = _.join(formatSeen, ',');
+                    newMovies.push(newMovie);
+                });
+                $scope.movies = newMovies;
             });
 
         }
         $scope.showMovieDetails = function(movie) {
-            movieService.getMovieInfo(movie.Title).then(function(response) {
+            movieService.getMovieInfo(movie.title).then(function(response) {
                 if (response) {
                     $uibModal.open({
                         animation: $scope.animationsEnabled,
@@ -325,4 +338,4 @@ angular.module('app.controllers', [])
     })
     .controller('watchlistController', function($scope, movieService) {
 
-    })
+    });

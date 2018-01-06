@@ -17,7 +17,7 @@
                         </label>
                     </div>
                     <input type="text" class="form-control" ng-model="search.$" placeholder="Search List" ng-hide="advanced">
-                    <input type="text" class="form-control" ng-model="search.Title" placeholder="Search Movie Title" ng-show="advanced">
+                    <input type="text" class="form-control" ng-model="search.title" placeholder="Search Movie Title" ng-show="advanced">
                     <input type="text" class="form-control" ng-model="search.Year" placeholder="Search Years" ng-show="advanced">
                     <input type="text" class="form-control" ng-model="search.Format" placeholder="Search Formats" ng-show="advanced">
                 </div>
@@ -25,9 +25,9 @@
             <table class="table table-responsive table-striped">
                 <tbody>
                 <tr ng-repeat="movie in movies | filter:search:false">
-                    <td>{{ movie.Title }}</td>
-                    <td>{{ movie.Year }}</td>
-                    <td>{{ movie.Format }}</td>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.year }}</td>
+                    <td>{{ movie.format }}</td>
                     <td><button type="button" ng-click="showMovieDetails(movie)" class="btn btn-default"><i class="material-icons">info_outline</i></button></td>
                 </tr>
                 </tbody>

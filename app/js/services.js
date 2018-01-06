@@ -13,7 +13,7 @@ angular.module('app.services', [])
             };
 
         var getMyMovies = function(style) {
-            return $http.get('/api/movies/search' + style).then(function(response) {
+            return $http.get('http://localhost:8080/movies/search' + style).then(function(response) {
                 if (response.status === 200) {
                     movieCache.put('movieList', response.data);
                     return response.data;
@@ -23,7 +23,7 @@ angular.module('app.services', [])
             });
         };
         var exportMyMovies = function(uid){
-            return $http.get('/api/movies/export?uid=' + uid).then(function(response){
+            return $http.get('http://cinemafile.api.jamotro.com/movies/export?uid=' + uid).then(function(response){
                 return response.data;
             });
         };
@@ -39,7 +39,7 @@ angular.module('app.services', [])
                     return {
                         Title: movieResult.original_title,
                         Year: movieResult.release_date.split('-')[0],
-                        Poster: 'http://image.tmdb.org/t/p/w342' + movieResult.poster_path,
+                        Poster: 'https://image.tmdb.org/t/p/w342' + movieResult.poster_path,
                         Description: movieResult.overview,
                         Id: movieResult.id
                     };
@@ -51,7 +51,7 @@ angular.module('app.services', [])
             if(userId){
                 query = '?uid=' + userId;
             }
-            return $http.get('/api/movies/stats' + query).then(function(response) {
+            return $http.get('http://cinemafile.api.jamotro.com/movies/stats' + query).then(function(response) {
                 if (response.data) {
                     movieCache.put('movieStats', response.data);
                     return response.data;
@@ -71,7 +71,7 @@ angular.module('app.services', [])
                 'uid': uid
             };
             var parameter = JSON.stringify(data);
-            return $http.post('/api/movies/add', parameter, {headers: {'Content-Type': 'application/json'}})
+            return $http.post('http://cinemafile.api.jamotro.com/movies/add', parameter, {headers: {'Content-Type': 'application/json'}})
                 .then(function successCallback() {
                     return 1;
                 }, function errorCallback() {
