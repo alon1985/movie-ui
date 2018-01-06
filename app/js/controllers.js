@@ -126,8 +126,8 @@ angular.module('app.controllers', [])
                     formatSeen = _.flatMap(movie.seen, function (viewing){
                         return viewing.format
                     });
-                    newMovie.year = _.join(yearSeen, ',');
-                    newMovie.format = _.join(formatSeen, ',');
+                    newMovie.year = _.join(yearSeen, ', ');
+                    newMovie.format = _.join(formatSeen, ', ');
                     newMovies.push(newMovie);
                 });
                 $scope.movies = newMovies;
