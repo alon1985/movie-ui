@@ -1,24 +1,16 @@
 {
   "name": "movie-ui",
+  "version": "0.1.0",
   "private": true,
-  "version": "1.0.0",
-  "description": "CinemaFiles",
-  "repository": "https://github.com/alon85/movie-ui",
-  "license": "Alon Motro",
-  "devDependencies": {
-    "bower": "^1.7.7",
-    "http-server": "^0.9.0",
-    "jasmine-core": "^2.4.1"
-  },
   "scripts": {
-    "start": "node app/server.js",
-    "serve": "node app/server.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
-    "angular": "^1.5.8",
-    "angular-cache": "^4.6.0",
-    "bootstrap": "^3.3.6",
-    "express": "^4.14.0",
-    "lodash": "^4.17.4"
+    "@material-ui/core": "^4.11.2",
+    "next": "10.0.3",
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
   }
 }
