@@ -2,29 +2,26 @@
 import  MovieCard  from '../components/MovieCard.js';
 import SearchBox from "../components/SearchBox.js";
 import React from "react";
+import { useRouter } from 'next/router'
 
-export default class Movies extends React.Component {
-    constructor(props) {
-        super(props);
-
+export default function Movies(props) {
+    const router = useRouter();
+    function searchMovies(query) {
+        router.push(`/movies?${query}`)
     }
-    render() {
         return (
             <div>
                 <main>
-                    <SearchBox searchMovies={query => this.searchMovies(query)} />
-                    {this.props.movies.map((movie) => (
+                    <SearchBox onSearchClick={searchMovies} />
+                    {props.movies.map((movie) => (
                         <MovieCard key={movie.id} movie={movie}/>
                     ))}
 
                 </main>
             </div>
         )
-    }
-    searchMovies(query) {
-        console.log('here')
-        alert(query);
-    }
+
+
 }
 
 export const getServerSideProps = async ({ query }) => {
@@ -40,6 +37,7 @@ export const getServerSideProps = async ({ query }) => {
     } else {
         urlQuery = '?limit=50'
     }
+    urlQuery += `&title=${query.title || ''}&year=${query.year || ''}&format=${query.format || ''}`;
     let movies = null
     // Fetch data from external API
     try {

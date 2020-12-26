@@ -45,43 +45,42 @@ export default function MovieCard({ movie }) {
                             <Grid container spacing={ 1 }>
                                 <Grid container item xs={ 10 } spacing={ 3 }>
                                     <Grid item xs={ 3 }>
-                                        <Typography noWrap={false}>
+                                        <Typography variant="h5">
                                             Title
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={ 3 }>
-                                        <Typography>
+                                        <Typography variant="h5">
                                             Description
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={ 3 }>
-                                        <Typography>
+                                        <Typography variant="h5">
                                             Viewed
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={ 3 }>
-                                        <Typography>
+                                        <Typography variant="h5">
                                             Actions
                                         </Typography>
                                     </Grid>
                                 </Grid>
                                 <Grid container item xs={ 10 } spacing={ 3 }>
                                     <Grid item xs={ 3 }>
-                                        <Typography variant="caption">
+                                        <Typography variant="subtitle1">
                                             {movie.title}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={ 3 }>
-                                        <div className="plot">
-                                        <Typography variant="caption" className="plot">
+
+                                        <Typography display="block" variant="caption" className="plot">
                                             {movie.plot}
                                         </Typography>
-                                        </div>
                                     </Grid>
                                     <Grid item xs={ 3 }>
                                         <Typography variant="caption">
-                                            {movie.seen.map((viewing) => (
-                                                <li>{viewing.year} - {viewing.format}</li>
+                                            {movie.seen.map((viewing, index) => (
+                                                <li key={index}>{viewing.year} - {viewing.format}</li>
                                             ))}
                                         </Typography>
                                     </Grid>
