@@ -5,12 +5,14 @@ import {
     makeStyles,
     Menu,
     MenuItem,
-    Theme,
     Toolbar,
     Typography
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import { MouseEvent, useState } from 'react'
+import {  useState } from 'react'
+import { useRouter } from 'next/router'
+import Link from "@material-ui/core/Link";
+
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -22,60 +24,64 @@ const useStyles = makeStyles((theme) =>
         },
         title: {
             flexGrow: 1,
+            align: "center"
         },
     }),
 )
 
 export const MenuAppBar = () => {
     const classes = useStyles()
-    const [ auth ] = useState(true)
+    const router = useRouter();
     const [ anchorEl, setAnchorEl ] = useState(null)
-    const open = Boolean(anchorEl)
+    const open = Boolean(anchorEl);
 
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget)
-    }
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
     const handleClose = () => {
-        setAnchorEl(null)
+        setAnchorEl(null);
+    };
+    const handleMenuItemClick = (event, index) => {
+        if(index===1) {
+            router.push('/movies')
+        } else if(index===2) {
+            router.push('/watchlist')
+        } else {
+            router.push('/stats')
+        }
     }
+
 
     return (
         <div className={ classes.root }>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
+                    <IconButton onClick={handleClick}
                         edge="start"
                         className={ classes.menuButton }
                         color="inherit"
-                        aria-label="menu"
-                    >
+                        aria-label="menu">
                         <MenuIcon />
+                        <Menu
+                            id="simple-menu"
+                            keepMounted
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                        >
+                            <MenuItem onClick={(event) => handleMenuItemClick(event, 1)}>Movie List</MenuItem>
+                            <MenuItem onClick={(event) => handleMenuItemClick(event, 2)}>Watch List</MenuItem>
+                            <MenuItem onClick={(event) => handleMenuItemClick(event, 3)}>Statistics</MenuItem>
+
+                        </Menu>
                     </IconButton>
                     <Typography
-                        variant="h6"
+                        variant="h2"
                         className={ classes.title }
                     >
-                        Movie List
+                        <Link href='/' style={{ color: 'inherit', textDecoration: 'inherit'}}>Cinemafile</Link>
                     </Typography>
-                    {auth &&
-                    <div>
-                        <IconButton
-                            aria-label="notifications"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            color="inherit"
-                        >
-                        </IconButton>
-                        <IconButton
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={ handleMenu }
-                            color="inherit"
-                        >
-                        </IconButton>
-                    </div>}
                 </Toolbar>
             </AppBar>
         </div>

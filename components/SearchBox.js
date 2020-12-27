@@ -56,7 +56,6 @@ export default function SearchBar(props) {
         props.onSearchClick(query);
     }
     const handleClear = e => {
-        alert(format);
         if(title) {
             setTitle('')
         }

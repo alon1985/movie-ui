@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 
 export default function Movies(props) {
     const router = useRouter();
+
     function searchMovies(query) {
         router.push(`/movies?${query}`)
     }
