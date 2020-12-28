@@ -52,8 +52,12 @@ export default function SearchBar(props) {
     }
     const handleSubmit = e => {
         e.preventDefault();
-        const query = `title=${title || ''}&year=${year || ''}&format=${format || ''}`;
-        props.onSearchClick(query);
+        const searchParams = {
+            title: title || '',
+            year: year || '',
+            format: format || ''
+        }
+        props.onSearchClick(searchParams);
     }
     const handleClear = e => {
         if(title) {
@@ -65,7 +69,11 @@ export default function SearchBar(props) {
         if(format) {
             setFormat('')
         }
-        props.onSearchClick('');
+        props.onSearchClick({
+            title: '',
+            year: '',
+            format: ''
+        });
     }
 
     return (
