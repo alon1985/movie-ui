@@ -1,5 +1,5 @@
 module.exports = {
-    basePath: '/movie-ui',
+    assetPrefix: '/movie-ui',
     images: {
         domains: ['image.tmdb.org']
     }
