@@ -14,8 +14,6 @@ export default function Movies(props) {
     const [ searchFormat, setFormat ] = useState('')
 
     async function searchMovies(query) {
-        console.log('querying');
-        console.log(JSON.stringify(query, null, 2))
         let urlQuery = `?limit=${limit}`;
             if (query.title !== searchTitle) {
                 setTitle(query.title);
@@ -81,7 +79,7 @@ export const getStaticProps = async () => {
     let movies = null
     // Fetch data from external API
     try {
-        const res = await fetch(`${apiRoute}?limit=3`);
+        const res = await fetch(`${apiRoute}?limit=${limit}`);
         if (res.status !== 200) {
             throw new Error('Failed to fetch')
         }
