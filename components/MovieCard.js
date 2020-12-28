@@ -28,6 +28,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MovieCard({ movie }) {
     const classes = useStyles();
+    let dates;
+    let actions = '';
+    if(movie.releaseDate) {
+        dates = <li>{movie.releaseDate}</li>
+        actions = <Button variant="contained" color="secondary">Delete Movie</Button>
+
+    } else {
+        dates = movie.seen.map((viewing, index) => {
+            return <li key={index}>{viewing.year} - {viewing.format}</li>;
+        });
+        actions = (<div>
+            <Button variant="contained" color="primary">Add Viewing</Button>
+                  <br/><br/>
+                <Button variant="contained" color="secondary">Delete Movie</Button></div>
+    )
+    };
+
     return (
         <div className={ classes.root }>
             <Paper className={ classes.paper }>
@@ -43,28 +60,7 @@ export default function MovieCard({ movie }) {
                     <Grid item xs={ 12 } sm container>
                         <Grid item xs container direction="column" justify="space-between">
                             <Grid container spacing={ 1 }>
-                                <Grid container item xs={ 10 } spacing={ 3 }>
-                                    <Grid item xs={ 3 }>
-                                        <Typography variant="h5">
-                                            Title
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={ 3 }>
-                                        <Typography variant="h5">
-                                            Description
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={ 3 }>
-                                        <Typography variant="h5">
-                                            Viewed
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={ 3 }>
-                                        <Typography variant="h5">
-                                            Actions
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
+
                                 <Grid container item xs={ 10 } spacing={ 3 }>
                                     <Grid item xs={ 3 }>
                                         <Typography variant="subtitle1">
@@ -78,16 +74,12 @@ export default function MovieCard({ movie }) {
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={ 3 }>
-                                        <Typography variant="caption">
-                                            {movie.seen.map((viewing, index) => (
-                                                <li key={index}>{viewing.year} - {viewing.format}</li>
-                                            ))}
+                                        <Typography variant="caption" align="center">
+                                            {dates}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs = { 3 }>
-                                        <Button variant="contained" color="primary">Add Viewing</Button>
-                                        <br/><br/>
-                                        <Button variant="contained" color="secondary">Delete Movie</Button>
+                                        {actions}
                                     </Grid>
                                 </Grid>
                             </Grid>

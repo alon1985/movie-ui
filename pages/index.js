@@ -11,12 +11,10 @@ export default function Home() {
                 <Typography variant="h5" component="h1" gutterBottom>
                     Welcome to Cinemafile - Alon's Movies
                 </Typography>
-                <Link href="/movies" color="secondary">
-                    See the movie list
-                </Link>
-                <Link href="/stats" color="secondary">
-                    See the stats
-                </Link>
+                <Typography variant="body1">
+                    This list was started on January 1, 2000.
+                    The list documents each time a movie was watched and in what format - either In Theaters or Video.
+                </Typography>
             </Box>
         </Container>
     );

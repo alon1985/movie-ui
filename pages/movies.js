@@ -3,6 +3,7 @@ import  MovieCard  from '../components/MovieCard.js';
 import SearchBox from "../components/SearchBox.js";
 import React from "react";
 import { useRouter } from 'next/router'
+import {Typography} from "@material-ui/core";
 
 export default function Movies(props) {
     const router = useRouter();
@@ -13,6 +14,7 @@ export default function Movies(props) {
         return (
             <div>
                 <main>
+                    <Typography variant="h2" align="center">Movie List</Typography>
                     <SearchBox onSearchClick={searchMovies} />
                     {props.movies.map((movie) => (
                         <MovieCard key={movie.id} movie={movie}/>
