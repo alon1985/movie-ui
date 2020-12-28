@@ -65,7 +65,7 @@ export default function SearchBar(props) {
         if(format) {
             setFormat('')
         }
-        router.push('/movies')
+        props.onSearchClick('');
     }
 
     return (

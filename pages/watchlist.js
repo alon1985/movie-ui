@@ -29,7 +29,7 @@ export default function Watchlist(props) {
 
 }
 
-export const getServerSideProps = async ({ query }) => {
+export const getStaticProps = async () => {
     // Fetch the first page as default
     let movies = null
     // Fetch data from external API

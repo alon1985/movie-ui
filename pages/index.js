@@ -1,6 +1,5 @@
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import Link from 'next/link';
 import Box from "@material-ui/core/Box";
 
 export default function Home() {

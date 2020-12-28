@@ -69,7 +69,7 @@ export default function Stats(props) {
         );
 }
 
-export const getServerSideProps = async ({ query }) => {
+export const getStaticProps = async () => {
 
     let stats = null
     // Fetch data from external API

@@ -1,50 +1,41 @@
 // posts will be populated at build time by getStaticProps()
 import  MovieCard  from '../components/MovieCard.js';
 import SearchBox from "../components/SearchBox.js";
-import React from "react";
-import { useRouter } from 'next/router'
+import React, {useState} from "react";
 import {Typography} from "@material-ui/core";
-
+const apiRoute = 'https://cinemafile2.api.jamotro.com/movies';
+const limit = '50';
 export default function Movies(props) {
-    const router = useRouter();
+    const [ movies, setMovies] = useState(props.movies)
 
-    function searchMovies(query) {
-        router.push(`/movies?${query}`)
+    async function searchMovies(query) {
+        const urlQuery = `?limit=${limit}&${query}`;
+        const data = await fetch(`${apiRoute}${urlQuery}`)
+        const results = await data.json()
+        setMovies(results);
     }
-        return (
-            <div>
-                <main>
-                    <Typography variant="h2" align="center">Movie List</Typography>
-                    <SearchBox onSearchClick={searchMovies} />
-                    {props.movies.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie}/>
+
+    return (
+        <div>
+            <main>
+                <Typography variant="h2" align="center">Movie List</Typography>
+                <SearchBox onSearchClick={searchMovies}/>
+
+                    {movies.map((movie, index) => (
+                        <MovieCard key={index} movie={movie}/>
                     ))}
 
-                </main>
-            </div>
-        )
-
-
+            </main>
+        </div>
+    )
 }
 
-export const getServerSideProps = async ({ query }) => {
-    // Fetch the first page as default
-    let urlQuery = '';
-    if(query.limit) {
-        urlQuery = `?limit=${query.limit}`;
-        if(query.offset) {
-            urlQuery += `&offset=${query.offset}`
-        }
-    } else if(query.offset) {
-        urlQuery = `?offset=${query.offset}&limit=50`;
-    } else {
-        urlQuery = '?limit=50'
-    }
-    urlQuery += `&title=${query.title || ''}&year=${query.year || ''}&format=${query.format || ''}`;
+export const getStaticProps = async () => {
+
     let movies = null
     // Fetch data from external API
     try {
-        const res = await fetch(`https://cinemafile2.api.jamotro.com/movies${urlQuery}`);
+        const res = await fetch(`${apiRoute}?limit=50`);
         if (res.status !== 200) {
             throw new Error('Failed to fetch')
         }

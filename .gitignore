@@ -1,6 +1,6 @@
 /node_modules/
-.next
 .DS_store
 .idea/
 *.xml
 *.iml
+.next
