@@ -22,7 +22,7 @@ export default function Movies(props) {
                 <SearchBox onSearchClick={searchMovies}/>
 
                     {movies.map((movie, index) => (
-                        <MovieCard key={index} movie={movie}/>
+                        <MovieCard key={movie.id} movie={movie}/>
                     ))}
 
             </main>
