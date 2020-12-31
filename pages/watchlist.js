@@ -34,7 +34,7 @@ export const getStaticProps = async () => {
     let movies = null
     // Fetch data from external API
     try {
-        const res = await fetch(`https://cinemafile2.api.jamotro.com/watchlist`);
+        const res = await fetch(`https://cinemafile.api.jamotro.com/watchlist`);
         if (res.status !== 200) {
             throw new Error('Failed to fetch')
         }
