@@ -4,7 +4,7 @@ import SearchBox from "../components/SearchBox.js";
 import React, {useState} from "react";
 import {Typography} from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
-const apiRoute = 'https://cinemafile2.api.jamotro.com/movies';
+const apiRoute = 'https://cinemafile.api.jamotro.com/movies';
 const limit = '50';
 export default function Movies(props) {
     const [ movies, setMovies] = useState(props.movies)
